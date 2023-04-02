@@ -1,0 +1,71 @@
+html {
+    
+    background-color: #FBF9F1;
+}
+
+body {
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+    margin:auto;
+}
+
+.login-container {
+    width:63%;
+    height: 65%;
+    margin:auto;
+    margin-top: 6%;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+    
+    
+}
+#text-box {
+	margin-top:10%;
+}
+
+
+.text {
+    padding-right: 50px;
+    font-size: 1.25rem;
+    display: flex;
+    flex-wrap:wrap;
+    align-items: center;
+    margin-bottom: 25px;
+    justify-content: center;
+}
+
+#findPWD {
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+}
+
+
+tr td {
+    display: flex;
+    padding-left: 10%;
+    padding-bottom: 6%;
+    justify-content: center;
+}
+
+
+
+#update {
+    width: 407px;
+    height: 35px;
+    color: #000000;
+    background-color: #2B7C1E;
+    cursor: pointer;
+    margin:auto;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 120%;
+    margin-top:6%;
+    box-shadow: 4px 4px 1px 0 rgba(0,0,0,0.25);
+}
+
+#text-box input {
+    font-size:120%;
+   
+}

@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+/* MATCAT 기본 배경 색*/
+html {
+    background-color: #FBF9F1;
+    text-align: center;
+	width:100%;
+	margin:auto;
+}
+body {
+	margin : auto;
+	width:1440px;
+	height:1024px;
+}
+
+/* 탑버튼*/
+#toTop {
+  position: fixed;  
+  bottom: 100px;
+  display: none;
+  z-index: 9999;
+}
+
+
+
+
+/* 메인페이지 사진*/
+#mainjpg {
+	margin-top:6%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom:4%;
+    display: flex;
+    justify-content: center;
+}
+/* 추천메뉴 전체 틀 */
+.body-newmenu {
+    margin:auto;
+    max-width:940px; 
+}
+.body-newmenu a {
+	font-size:3rem;
+}
+
+/* 추천메뉴 사진이랑 옵션들 전체 툴*/
+.picture {
+    display: flex;
+    margin:auto;
+    margin-top: 8%;
+}
+
+.productform {
+	display:flex;
+	flex-wrap:wrap;
+    justify-content: space-evenly;
+}
+/* 사진 이름 가격 '바로구매' '카트에 담기' 수량 옵션 */
+.product_set {
+    font-size: 1.5rem;
+    padding-left: 40px;
+    margin-bottom:4%;
+
+}
+
+/* 사진 크기 고정 */
+.pic {
+	width:180px;
+	height:130px;
+}
+
+.body-manysellmenu a {
+	font-size:3rem;
+}
+/* 가장많이팔리제품 전체 툴 */
+.body-manysellmenu {
+     margin:auto;
+    max-width:940px; 
+}
+
+/* 가장많이팔리제품 사진이랑 옵션들 전체 툴*/
+.manysellmenu-picture {
+    
+    display: flex;
+    margin:auto;
+    margin-top: 8%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>sidebar</title>
+	<style>
+		#sidebar {
+			margin-top: 8%;
+			margin-left: 20px;
+			position: fixed;
+			background-color: #FBF9F1;
+		}
+		
+		#sidebar ul {
+			padding: 0;
+			margin: 0;
+		}
+		
+		#sidebar li {
+			padding: 10px;
+			list-style-type: none;
+			border-bottom: 1px solid #ddd;
+		}
+		
+		#sidebar li:last-child{
+			border-bottom: none;
+		}
+		
+		#sidebar-title {
+			font-size: large;
+			font-weight: 900;
+		}
+		
+		
+		#sidebar li a {
+			display: flex;
+			justify-content: center;
+			color: #333;
+			text-decoration: none;
+			font-weight: bold;
+		}
+		
+		#sidebar li a:hover {
+			background-color: #ddd;
+		}
+	</style>
+</head>
+<body>
+<div id="sidebar">
+	<ul>
+		<li><a id="viewMypage" href="/admin/regist">관리자 계정 생성</a></li>
+		<li><a id="viewUpdatepage" href="/admin/viewMember">회원 관리</a></li>
+		<li><a href="/product/list">상품 관리</a></li>
+		<li><a href="/board/boardList">고객센터</a></li>
+		<li><a href="/order/admin/ordList">주문 관리</a></li>
+		<li><a href="/order/admin/refList">반품 관리</a></li>
+	</ul>
+</div>
+</body>
+</html>

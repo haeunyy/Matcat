@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="sidebarFragment">
+<link rec="stylesheet" href="../../static/css/help.css">
+	<!-- Sidebar -->
+		<div id="helpDesk" class="row rounded">
+			<h2 class="text-light mt-3">고객센터</h2>
+
+		<br><br><br><br>
+			
+		<button id="HelpNav" class="btn btn-light" style="margin-top: 5%;"
+			onclick="location.href='../user/userHelp001'" sec:authorize="hasRole('MEMBER')">1:1 문의 접수</button>
+		<br>
+		<button id="HelpNav" class="btn btn-light " style="margin-top: 5%;"
+			onclick="location.href='../board/userBoardList'" sec:authorize="hasRole('MEMBER')">1:1 문의
+			내역</button>
+		<button id="HelpNav" class="btn btn-light " style="margin-top: 5%;"
+			onclick="location.href='../board/adminBoardList'" sec:authorize="hasRole('ADMIN')">유저 문의
+			내역</button>	
+		<br>
+		<button id="HelpNav" class="btn btn-light" style="margin-top: 5%;"
+			onclick="location.href='../board/boardList'">공지사항</button>
+		<br>
+		<button id="HelpNav" class="btn btn-light" style="margin-top: 5%;"
+			onclick="location.href='../board/alwaysHelp'">자주 묻는
+			질문</button>
+		<br>
+	</div>
+	<!-- End of Sidebar -->
+
+</th:block>
+
+</html>

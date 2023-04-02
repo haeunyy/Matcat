@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<title>Regist</title>
+	<link href="/css/AdminRegist.css" rel="stylesheet">
+	<script src="/js/BeforeUpdate.js" type="text/javascript"></script>
+	<style>
+		#viewMypage {
+			opacity: 0.3;
+		}
+	
+	</style>
+</head>
+<div th:replace="/common/AdminHeader.html"></div>
+<body>
+<div th:replace="/common/AdminLeftSidebar.html"/>
+<div th:replace="/common/RightSidebar.html"/>
+<div class="login-container">
+	<form id="findId" action="/admin/regist" method="post">
+		<table id="text-box">
+			<tr class="name">
+				<th class="insertid">
+					<label class="text">이름</label>
+				</th>
+				<td>
+					<input type="text" name="memberName" class="nameInsert" required>
+				</td>
+			</tr>
+			<tr class="phone">
+				<th>
+					<label class="text">아이디</label>
+				</th>
+				<td>
+					<input type="text" name="memberId" class="memberId" required>
+				</td>
+			</tr>
+			<tr class="PWD">
+				<th>
+					<label class="text">비밀번호</label>
+				</th>
+				<td>
+					<input type="password" name="memberPwd" class="memberPwd" required>
+				</td>
+			</tr>
+			<div id="centerplz">
+				<input type="submit" value="관리자 등록" id="findMyId">
+			</div>
+		</table>
+	</form>
+</div>
+</body>
+</html>

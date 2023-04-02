@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>login</title>
+	<link rel="stylesheet" href="/css/login.css">
+	<script type="text/javascript" src="/js/login.js"></script>
+	
+</head>
+<div th:replace="/member/header.html"></div>
+<body class="container">
+<div class="login-container">
+	<form id="loginForm" action="/member/login" method="get">
+		<table id="text-box">
+			<th id="yourId" th:if="${ yourId != null && yourId != '' }">
+				<th:block th:text="|회원님의 아이디는 ${yourId} 입니다.|"/>
+			</th>
+			<th id="yourId2" th:unless="${ yourId != null && yourId != '' }">
+				<th:block>입력하신 정보로 조회되는 아이디가 없습니다.</th:block>
+			</th>
+			<div id="centerplz">
+				<input type="submit" value="로그인 하러 가기" id="loginSubmit_2">
+			</div>
+		</table>
+	</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+#sideBar {
+	
+	margin-right: 180vh;
+	background-color: #FBF9F1;
+	margin-top: 2%;
+	
+}
+#footer1{
+	background-color: #FBF9F1;
+}
+
+#content{
+	margin-top: -7%;
+}
+
+#fragheader{
+	margin-left: ;
+	
+}
+
+#page-top{
+	background-color: #FBF9F1;
+}
+
+#content{
+	height: auto;
+	width: 100vh;
+	margin: auto;
+	max-height: 100%;
+}
+
+#wrapper{
+	margin-top: -7vh;
+}
+
+
+body{
+	width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+    margin:auto;
+}
+
+#content-wrapper{
+	
+}

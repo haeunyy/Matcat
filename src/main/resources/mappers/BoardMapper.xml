@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.matcat.board.dao.BoardMapper">
+
+    <resultMap type="com.greedy.matcat.board.dto.BoardDTO" id="generalBoardResultMap">
+        <id property="postCode" column="POST_CODE"/>
+        <result property="postTitle" column="POST_TITLE"/>
+        <result property="postContent" column="POST_CONTENT"/>
+        <result property="reportDate" column="REPORT_DATE"/>
+        <result property="modyDate" column="MODY_DATE"/>
+        <result property="deleteDate" column="DELETE_DATE"/>
+        <result property="selectType" column="SELECT_TYPE"/>
+
+        <association property="writer" resultMap="memberResultMap"/>
+        <collection property="replyList" resultMap="replyResultMap"/>
+    </resultMap>
+
+    <resultMap type="com.greedy.matcat.member.dto.MemberDTO" id="memberResultMap">
+        <id property="memberNo" column="MEMBER_NO"/>
+        <result property="memberId" column="MEMBER_ID"/>
+        <result property="memberPwd" column="MEMBER_PWD"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="memberEmail" column="MEMBER_EMAIL"/>
+        <result property="memberGender" column="MEMBER_GENDER"/>
+        <result property="memberPhone" column="MEMBER_PHONE"/>
+        <result property="memberAddress" column="MEMBER_ADDRESS"/>
+        <result property="memberLeaveYN" column="MEMBER_LEAVE_YN"/>
+        <result property="memberGrade" column="MEMBER_GRADE"/>
+        <collection property="memberRoleList" resultMap="authMemberResultMap"/>
+    </resultMap>
+
+    <resultMap id="authMemberResultMap" type="com.greedy.matcat.member.dto.AuthMemberDTO">
+        <id property="memberNo" column="REF_MEMBER_NO"/>
+        <id property="authorityCode" column="REF_AUTH_CODE"/>
+        <association property="authority" resultMap="authorityResultMap"/>
+    </resultMap>
+
+    <resultMap id="authorityResultMap" type="com.greedy.matcat.member.dto.AuthorityDTO">
+        <id property="authCode" column="REF_AUTH_CODE2"/>
+        <result property="authName" column="AUTH_NAME"/>
+        <result property="authExplanation" column="AUTH_EXPLANATION"/>
+    </resultMap>
+
+    <resultMap type="com.greedy.matcat.board.dto.ReplyDTO" id="replyResultMap">
+        <id property="replyNo" column="REPLY_NO"/>
+        <result property="postCode" column="POST_CODE"/>
+        <result property="replyContent" column="REPLY_CONTENT"/>
+        <result property="reportDate" column="REPORT_DATE"/>
+        <result property="replyContent" column="REPLY_CONTENT"/>
+
+        <association property="writer" javaType="com.greedy.matcat.member.dto.MemberDTO">
+            <id property="memberNo" column="R_MEMBER_NO"/>
+            <result property="memberId" column="MEMBER_ID"/>
+            <result property="memberPwd" column="MEMBER_PWD"/>
+            <result property="memberName" column="R_MEMBER_NAME"/>
+            <result property="memberEmail" column="MEMBER_EMAIL"/>
+            <result property="memberGender" column="MEMBER_GENDER"/>
+            <result property="memberPhone" column="MEMBER_PHONE"/>
+            <result property="memberAddress" column="MEMBER_ADDRESS"/>
+            <result property="memberLeaveYN" column="MEMBER_LEAVE_YN"/>
+            <result property="memberGrade" column="MEMBER_GRADE"/>
+        </association>
+    </resultMap>
+
+
+    <select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT
+        COUNT(*)
+        FROM TBL_POST A
+        <if test="searchMap.searchCondition == 'writer'">
+            JOIN TBL_MEMBER B ON(A.MEMBER_NO = B.MEMBER_NO)
+        </if>
+        <where>
+            <if test="searchMap.searchCondition == 'writer'">
+                B.MEMBER_NAME LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'title'">
+                A.POST_TITLE LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'content'">
+                A.POST_CONTENT LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            AND A.MEMBER_NO = #{memberNo}
+        </where>
+    </select>
+    
+    <select id="selectTotalCount2" resultType="_int" parameterType="hashmap">
+        SELECT
+        COUNT(*)
+        FROM TBL_POST A
+        
+        <if test="searchMap.searchCondition == 'writer'">
+            JOIN TBL_MEMBER B ON(A.MEMBER_NO = B.MEMBER_NO)
+        </if>
+        <where>
+            <if test="searchMap.searchCondition == 'writer'">
+                B.MEMBER_NAME LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'title'">
+                A.POST_TITLE LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'content'">
+                A.POST_CONTENT LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            AND A.SELECT_TYPE = 2
+        </where>
+    </select>
+    
+    <select id="selectTotalCount3" resultType="_int" parameterType="hashmap">
+        SELECT
+        COUNT(*)
+        FROM TBL_POST A
+        
+        <if test="searchMap.searchCondition == 'writer'">
+            JOIN TBL_MEMBER B ON(A.MEMBER_NO = B.MEMBER_NO)
+        </if>
+        <where>
+            <if test="searchMap.searchCondition == 'writer'">
+                B.MEMBER_NAME LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'title'">
+                A.POST_TITLE LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'content'">
+                A.POST_CONTENT LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            AND A.SELECT_TYPE = 1
+        </where>
+    </select>
+
+    <select id="selectBoardList" resultMap="generalBoardResultMap">
+        SELECT
+        A.POST_CODE
+        , A.POST_TITLE
+        , A.POST_CONTENT
+        , A.REPORT_DATE
+        , A.MEMBER_NO
+        , E.MEMBER_NAME
+        , D.REPLY_NO
+        , A.SELECT_TYPE
+          FROM (SELECT
+        				ROWNUM RNUM
+       				  , B.POST_CODE
+       				  , B.POST_TITLE
+        			  , B.REPORT_DATE
+       				  , B.POST_CONTENT
+     			      , B.MEMBER_NO
+       				  , B.SELECT_TYPE
+     				     FROM (SELECT
+      								  C.POST_CODE
+      							    , C.POST_TITLE
+      							    , C.REPORT_DATE
+     							    , C.POST_CONTENT
+     							    , C.MEMBER_NO
+      							    , C.SELECT_TYPE
+      									  FROM TBL_POST C
+        <if test="searchMap.searchCondition == 'writer'">
+            JOIN TBL_MEMBER D ON(C.MEMBER_NO = D.MEMBER_NO)
+        </if>
+        <where>
+            <if test="searchMap.searchCondition == 'writer'">
+                D.MEMBER_NO LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'title'">
+                C.POST_TITLE LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'content'">
+                C.POST_CONTENT LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            AND C.MEMBER_NO = #{memberNo}
+        </where>
+        ORDER BY C.REPORT_DATE DESC
+        ) B
+        <![CDATA[
+                  WHERE ROWNUM <= #{ searchMap.endRow }
+                  ]]>)A
+        LEFT JOIN TBL_MEMBER E ON(A.MEMBER_NO = E.MEMBER_NO)
+        LEFT JOIN TBL_REPLY D ON(A.POST_CODE = D.POST_CODE)
+        WHERE A.RNUM >= #{ searchMap.startRow } AND A.SELECT_TYPE = 1
+        ORDER BY RNUM
+    </select>
+    
+    <select id="selectBoardList2" resultMap="generalBoardResultMap">
+        SELECT
+        A.POST_CODE
+        , A.POST_TITLE
+        , A.POST_CONTENT
+        , A.REPORT_DATE
+        , A.MEMBER_NO
+        , E.MEMBER_NAME
+        , D.REPLY_NO
+        , A.SELECT_TYPE
+          FROM (SELECT
+        				ROWNUM RNUM
+       				  , B.POST_CODE
+       				  , B.POST_TITLE
+        			  , B.REPORT_DATE
+       				  , B.POST_CONTENT
+     			      , B.MEMBER_NO
+       				  , B.SELECT_TYPE
+     				     FROM (SELECT
+      								  C.POST_CODE
+      							    , C.POST_TITLE
+      							    , C.REPORT_DATE
+     							    , C.POST_CONTENT
+     							    , C.MEMBER_NO
+      							    , C.SELECT_TYPE
+      									  FROM TBL_POST C
+      									 WHERE C.SELECT_TYPE = 2
+      									  
+        <if test="searchMap.searchCondition == 'writer'">
+            JOIN TBL_MEMBER D ON(C.MEMBER_NO = D.MEMBER_NO)
+        </if>
+        
+            <if test="searchMap.searchCondition == 'writer'">
+                D.MEMBER_NO LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'title'">
+                C.POST_TITLE LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'content'">
+                C.POST_CONTENT LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+        
+        ORDER BY C.REPORT_DATE DESC
+        ) B
+        <![CDATA[
+                  WHERE ROWNUM <= #{ searchMap.endRow }
+                  ]]>)A
+        LEFT JOIN TBL_MEMBER E ON(A.MEMBER_NO = E.MEMBER_NO)
+        LEFT JOIN TBL_REPLY D ON(A.POST_CODE = D.POST_CODE)
+        WHERE A.RNUM >= #{ searchMap.startRow } AND A.SELECT_TYPE = 2
+        ORDER BY RNUM
+    </select>
+    
+    <select id="selectBoardList3" resultMap="generalBoardResultMap">
+        SELECT
+        A.POST_CODE
+        , A.POST_TITLE
+        , A.POST_CONTENT
+        , A.REPORT_DATE
+        , A.MEMBER_NO
+        , E.MEMBER_NAME
+        , D.REPLY_NO
+        , A.SELECT_TYPE
+          FROM (SELECT
+        				ROWNUM RNUM
+       				  , B.POST_CODE
+       				  , B.POST_TITLE
+        			  , B.REPORT_DATE
+       				  , B.POST_CONTENT
+     			      , B.MEMBER_NO
+       				  , B.SELECT_TYPE
+     				     FROM (SELECT
+      								  C.POST_CODE
+      							    , C.POST_TITLE
+      							    , C.REPORT_DATE
+     							    , C.POST_CONTENT
+     							    , C.MEMBER_NO
+      							    , C.SELECT_TYPE
+      									  FROM TBL_POST C
+      									 WHERE C.SELECT_TYPE = 1 
+      									  
+        <if test="searchMap.searchCondition == 'writer'">
+            JOIN TBL_MEMBER D ON(C.MEMBER_NO = D.MEMBER_NO)
+        </if>
+        
+            <if test="searchMap.searchCondition == 'writer'">
+                AND D.MEMBER_NO LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'title'">
+                AND C.POST_TITLE LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+            <if test="searchMap.searchCondition == 'content'">
+                AND C.POST_CONTENT LIKE '%' || #{ searchMap.searchValue } || '%'
+            </if>
+        
+        ORDER BY C.REPORT_DATE DESC
+        ) B 
+        <![CDATA[
+                  WHERE ROWNUM <= #{ searchMap.endRow }
+                  ]]>)A
+        LEFT JOIN TBL_MEMBER E ON(A.MEMBER_NO = E.MEMBER_NO)
+        LEFT JOIN TBL_REPLY D ON(A.POST_CODE = D.POST_CODE)
+        WHERE A.RNUM >= #{ searchMap.startRow } AND A.SELECT_TYPE = 1
+        ORDER BY RNUM
+    </select>
+
+    <select id="selectBoardDetail" resultMap="generalBoardResultMap">
+        SELECT A.POST_CODE
+             , A.POST_TITLE
+             , A.POST_CONTENT
+             , A.MEMBER_NO
+             , A.REPORT_DATE
+             , D.REPLY_NO
+             , D.REPLY_CONTENT
+             , B.MEMBER_NAME
+             , A.SELECT_TYPE
+        FROM TBL_POST A
+                 JOIN TBL_MEMBER B ON A.MEMBER_NO = B.MEMBER_NO
+                 LEFT JOIN TBL_REPLY D ON A.POST_CODE = D.POST_CODE AND B.MEMBER_NO = D.MEMBER_NO
+                 LEFT JOIN TBL_MEMBER C ON D.MEMBER_NO = C.MEMBER_NO
+        WHERE A.POST_CODE = ${postCode}
+        ORDER BY D.REPLY_NO
+    </select>
+
+    <insert id="insertReply">
+        INSERT
+        INTO TBL_REPLY A (
+		A.REPLY_NO
+		, A.POST_CODE
+		, A.REPLY_CONTENT
+		, A.MEMBER_NO
+		, A.REPORT_DATE
+		)
+        VALUES
+            (
+            SEQ_REPLY_NO.NEXTVAL
+                , #{ postCode }
+                , #{ replyContent }
+                , #{ writer.memberNo }
+                , SYSDATE
+            )
+    </insert>
+
+    <select id="selectReplyList" resultMap="replyResultMap">
+        SELECT A.REPLY_NO
+             , A.POST_CODE
+             , A.REPLY_CONTENT
+             , A.REPORT_DATE
+             , A.MEMBER_NO   R_MEMBER_NO
+             , B.MEMBER_NAME R_MEMBER_NAME
+        FROM TBL_REPLY A
+                 JOIN TBL_MEMBER B ON (A.MEMBER_NO = B.MEMBER_NO)
+        WHERE A.POST_CODE = #{ postCode }
+        ORDER BY A.REPLY_NO
+    </select>
+
+    <delete id="deleteReply">
+        DELETE
+        FROM TBL_REPLY A
+        WHERE A.REPLY_NO = #{ replyNo }
+    </delete>
+    
+    <delete id="deletePost">
+    	DELETE
+    	FROM TBL_POST A
+    	WHERE A.POST_CODE = #{ postCode }
+    </delete>
+
+    <insert id="insertBoard">
+        INSERT
+        INTO TBL_POST A 
+        (
+		  A.POST_CODE
+		, A.POST_TITLE
+		, A.POST_CONTENT
+		, A.MEMBER_NO
+		, A.REPORT_DATE
+		, A.SELECT_TYPE
+		)
+        VALUES
+        (
+          SEQ_POST_CODE.NEXTVAL
+        , #{ postTitle }
+        , #{ postContent }
+        , #{ writer.memberNo }
+        , SYSDATE
+        , #{ selectType }
+          )
+    </insert>
+    
+    <update id="updatePost">
+        UPDATE
+        		TBL_POST A
+           SET
+           	A.POST_TITLE = #{ postTitle }
+		  , A.POST_CONTENT = #{ postContent }
+		  , A.MEMBER_NO = #{ writer.memberNo }
+		  , A.MODY_DATE = SYSDATE
+		  , A.SELECT_TYPE = #{ selectType }
+
+		 WHERE A.POST_CODE = #{ postCode }
+		   AND A.MEMBER_NO = #{ writer.memberNo }
+    </update>
+
+</mapper>

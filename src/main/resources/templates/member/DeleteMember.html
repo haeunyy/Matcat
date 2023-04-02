@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<title>DeleteMember</title>
+	<link href="/css/DeleteMember.css" rel="stylesheet">
+	<script src="/js/DeleteMember.js" type="text/javascript"></script>
+</head>
+<div th:replace="/common/header.html"></div>
+<body>
+<div th:replace="/common/sidebar.html"></div>
+<div class="login-container">
+
+		<div class="text">탈퇴 사유</div>
+		<div class="text_2">탈퇴하시면 복구가 어렵습니다. 괜찮으시겠습니까?</div>
+		
+	<form class="byebye" action="/member/delete" method="post" id="byebye">
+			
+	<tr>	
+		<td>
+			<textarea name="memberLeaveReason" id="goodbye" 
+			cols="20" rows="8" style="resize:none;" placeholder="0/200" required></textarea>
+		</td>
+	</tr>
+	<div id="centerplz">
+		<input id="loginSubmit" type="button" value="탈퇴하기">
+	</div>
+	</form>
+</div>
+
+</body>
+</html>

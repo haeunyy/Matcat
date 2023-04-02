@@ -1,0 +1,81 @@
+
+
+html {
+	
+    background-color: #FBF9F1;
+    
+}
+
+body {
+	margin:auto;
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+    
+}
+
+#idsearchname {
+	padding:8% 0% 0% 0%;
+	font-size:3rem;
+	opacity: 40%;
+}
+/* 아이디찾기 컨테이너*/
+.login-container {
+    width: 63%;
+    height: 55%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+}
+
+/* 이름 전화번호 이메일 */
+.text {
+    font-size: 1.5rem;
+    display: flex;
+    flex-wrap:wrap;
+    align-items: center;
+    margin-bottom: 12%;
+    justify-content: center;
+}
+/*폼 전체*/
+#findId {
+    display: flex;
+     align-items: center;
+     padding: 5% 10% 5% 10%;
+     flex-direction: column-reverse;
+}
+
+
+tr td {
+    display: flex;
+    padding-left: 5%;
+    padding-bottom: 5%;
+    justify-content: center;
+}
+
+.nameInsert,
+.Phone,
+ .Email {
+   font-size:30px;
+}
+
+
+#findMyId {
+    width: 200px;
+    height: 35px;
+    color: #000000;
+    background-color: #72c565;
+    cursor: pointer;
+    margin-top: 20%;
+    border: 0px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    box-shadow: 3px 2px 1px 0 rgba(0,0,0,0.25);
+}
+
+input {
+    font-size: 200%;
+}
+

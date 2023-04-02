@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.matcat.member.dao.MemberMapper">
+
+    <resultMap id="memberResultMap" type="com.greedy.matcat.member.dto.MemberDTO">
+        <id property="memberNo" column="MEMBER_NO"/>
+        <result property="memberId" column="MEMBER_ID"/>
+        <result property="memberPwd" column="MEMBER_PWD"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="memberEmail" column="MEMBER_EMAIL"/>
+        <result property="memberGender" column="MEMBER_GENDER"/>
+        <result property="memberPhone" column="MEMBER_PHONE"/>
+        <result property="memberAddress" column="MEMBER_ADDRESS"/>
+        <result property="memberLeaveYN" column="MEMBER_LEAVE_YN"/>
+        <result property="memberGrade" column="MEMBER_GRADE"/>
+        <result property="memberLeaveReason" column="MEMBER_LEAVE_REASON"/>
+        <collection property="memberRoleList" resultMap="authMemberResultMap"/>
+    </resultMap>
+
+    <resultMap id="authMemberResultMap" type="com.greedy.matcat.member.dto.AuthMemberDTO">
+        <id property="memberNo" column="REF_MEMBER_NO"/>
+        <id property="authorityCode" column="REF_AUTH_CODE"/>
+        <association property="authority" resultMap="authorityResultMap"/>
+    </resultMap>
+
+    <resultMap id="authorityResultMap" type="com.greedy.matcat.member.dto.AuthorityDTO">
+        <id property="authCode" column="REF_AUTH_CODE2"/>
+        <result property="authName" column="AUTH_NAME"/>
+        <result property="authExplanation" column="AUTH_EXPLANATION"/>
+    </resultMap>
+
+    <resultMap type="com.greedy.matcat.board.dto.BoardDTO" id="generalBoardResultMap">
+        <id property="postCode" column="POST_CODE"/>
+        <result property="postTitle" column="POST_TITLE"/>
+        <result property="postContent" column="POST_CONTENT"/>
+        <result property="reportDate" column="REPORT_DATE"/>
+        <result property="modyDate" column="MODY_DATE"/>
+        <result property="deleteDate" column="DELETE_DATE"/>
+        <result property="selectType" column="SELECT_TYPE"/>
+
+        <association property="writer" resultMap="memberResultMap"/>
+    </resultMap>
+
+    <select id="memberIdCheck" resultType="string">
+        SELECT
+               MEMBER_ID
+          FROM TBL_MEMBER
+         WHERE MEMBER_ID = #{ memberId }
+           AND MEMBER_LEAVE_YN = 'N'
+    </select>
+    <select id="memberPwCheck" resultType="string">
+        SELECT
+               MEMBER_PWD
+          FROM tbl_member
+         WHERE MEMBER_ID = #{ memberId }
+           AND MEMBER_LEAVE_YN = 'N'
+    </select>
+
+    <select id="login" resultMap="memberResultMap">
+        SELECT
+               A.MEMBER_NO
+             , A.MEMBER_ID
+             , A.MEMBER_PWD
+             , A.MEMBER_NAME
+             , A.MEMBER_EMAIL
+             , A.MEMBER_GENDER
+             , A.MEMBER_PHONE
+             , A.MEMBER_ADDRESS
+             , A.MEMBER_LEAVE_YN
+             , A.MEMBER_GRADE
+             , B.MEMBER_NO REF_MEMBER_NO
+             , B.AUTH_CODE REF_AUTH_CODE
+             , C.AUTH_CODE REF_AUTH_CODE2
+             , C.AUTH_NAME
+             , c.AUTH_EXPLANATION
+          FROM tbl_member A
+          LEFT JOIN TBL_AUTH_MEMBER B ON(A.MEMBER_NO = B.MEMBER_NO)
+          LEFT JOIN tbl_authority C ON (B.AUTH_CODE = C.AUTH_CODE)
+         WHERE MEMBER_ID = #{ memberId }
+           AND MEMBER_LEAVE_YN = 'N'
+    </select>
+
+    <select id="selectMemberByEmail" resultType="string">
+        SELECT
+               MEMBER_ID
+          FROM tbl_member
+         WHERE MEMBER_EMAIL = #{ memberEmail }
+           AND MEMBER_ID = #{ memberId }
+           AND MEMBER_NAME = #{ memberName }
+           AND MEMBER_PHONE = #{ memberPhone }
+           AND MEMBER_LEAVE_YN = 'N'
+    </select>
+
+    <select id="findMyId" resultType="string">
+        SELECT
+               MEMBER_ID
+          FROM tbl_member
+         WHERE MEMBER_NAME = #{ memberName }
+           AND MEMBER_EMAIL = #{ memberEmail }
+           AND MEMBER_PHONE = #{ memberPhone }
+           AND MEMBER_LEAVE_YN = 'N'
+    </select>
+
+    <select id="findByMemberEmail" resultType="string">
+        SELECT
+               MEMBER_ID
+          FROM TBL_MEMBER
+         WHERE MEMBER_EMAIL = #{ HERE }
+           AND MEMBER_LEAVE_YN = 'N'
+    </select>
+
+    <select id="totalCountMember" resultType="_int" parameterType="hashmap">
+        SELECT
+        COUNT(*)
+        FROM TBL_MEMBER
+        <where>
+            <if test="searchCondition == 'memberNo'">
+                AND MEMBER_NO LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="searchCondition == 'memberName'">
+                AND MEMBER_NAME LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberId'">
+                AND MEMBER_ID LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberPhone'">
+                AND MEMBER_PHONE LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberLeaveYN'">
+                AND MEMBER_LEAVE_YN LIKE '%' || #{ searchValue } || '%'
+            </if>
+        </where>
+    </select>
+
+    <select id="totalMember" resultMap="memberResultMap">
+        SELECT
+                MEMBER_NO,
+                MEMBER_ID,
+                MEMBER_NAME,
+                MEMBER_ADDRESS,
+                MEMBER_EMAIL,
+                MEMBER_PHONE,
+                MEMBER_LEAVE_YN
+          FROM (SELECT
+                     ROWNUM RNUM,
+                     A.MEMBER_NO,
+                     A.MEMBER_ID,
+                     A.MEMBER_NAME,
+                     A.MEMBER_ADDRESS,
+                     A.MEMBER_EMAIL,
+                     A.MEMBER_PHONE,
+                     A.MEMBER_LEAVE_YN
+                FROM (SELECT
+                             *
+                        FROM TBL_MEMBER
+        <where>
+            <if test="searchCondition == 'memberNo'">
+                         AND MEMBER_NO LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberName'">
+                         AND MEMBER_NAME LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberId'">
+                         AND MEMBER_ID LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberPhone'">
+                         AND MEMBER_PHONE LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberLeaveYN'">
+                         AND MEMBER_LEAVE_YN LIKE '%' || #{ searchValue } || '%'
+            </if>
+                         AND MEMBER_GRADE = 'USER'
+        </where>
+                       ORDER BY MEMBER_NO DESC) A
+               WHERE #{ endRow } >= ROWNUM
+        ) A
+         WHERE RNUM >= #{ startRow }
+         ORDER BY RNUM
+    </select>
+
+    <select id="newPost" resultMap="generalBoardResultMap">
+        select
+            post_title,
+            member_name,
+            post_code,
+            report_date
+        from (select
+                  rownum rnum,
+                  a.post_code,
+                  a.post_title,
+                  a.report_date,
+                  a.post_content,
+                  a.member_name
+              from (select
+                        a.*,
+                        b.*
+                    from tbl_post a
+                    join tbl_member b on (a.member_no = b.member_no)
+                   order by a.report_date desc) a
+             ) b
+        where 3 >= rnum
+    </select>
+    <select id="findMemberByEmail" resultType="java.lang.Integer">
+        select
+               member_no
+          from tbl_member
+         where member_email = #{here}
+    </select>
+
+    <insert id="memberRegist">
+        INSERT INTO tbl_member
+        (
+         MEMBER_NO,
+         MEMBER_ID,
+         MEMBER_PWD,
+         MEMBER_NAME,
+         MEMBER_EMAIL,
+         MEMBER_GENDER,
+         MEMBER_PHONE,
+         MEMBER_ADDRESS,
+         MEMBER_LEAVE_YN,
+         MEMBER_GRADE
+         )
+        VALUES
+        (
+         SEQ_MEMBER_NO.NEXTVAL,
+         #{memberId},
+         #{memberPwd},
+         #{memberName},
+         #{memberEmail},
+         #{memberGender},
+         #{memberPhone},
+         #{memberAddress},
+         'N',
+         'USER'
+         )
+    </insert>
+
+    <insert id="memberRegistForApi">
+        INSERT INTO tbl_member
+        (
+            MEMBER_NO,
+            MEMBER_ID,
+            MEMBER_PWD,
+            MEMBER_NAME,
+            MEMBER_EMAIL,
+            MEMBER_GENDER,
+            MEMBER_PHONE,
+            MEMBER_ADDRESS,
+            MEMBER_LEAVE_YN,
+            MEMBER_GRADE
+        )
+        VALUES
+        (
+            SEQ_MEMBER_NO.NEXTVAL,
+            #{email},
+            null,
+            #{name},
+            #{email},
+            null,
+            null,
+            null,
+            'N',
+            'USER'
+        )
+    </insert>
+
+    <insert id="adminRegist">
+        INSERT INTO tbl_member
+        (
+         MEMBER_NO,
+         MEMBER_ID,
+         MEMBER_PWD,
+         MEMBER_NAME,
+         MEMBER_EMAIL,
+         MEMBER_GENDER,
+         MEMBER_PHONE,
+         MEMBER_ADDRESS,
+         MEMBER_LEAVE_YN,
+         MEMBER_GRADE
+         )
+        VALUES
+        (
+         SEQ_MEMBER_NO.NEXTVAL,
+         #{memberId},
+         #{memberPwd},
+         #{memberName},
+         null,
+         null,
+         null,
+         null,
+         'N',
+         'ADMIN'
+         )
+    </insert>
+    <insert id="memberAuth">
+        INSERT INTO TBL_AUTH_MEMBER
+        (
+            MEMBER_NO,
+            AUTH_CODE
+        )
+        VALUES
+        (
+          SEQ_MEMBER_NO.CURRVAL,
+          1
+        )
+    </insert>
+
+    <insert id="memberAuthForAdmin">
+        INSERT INTO TBL_AUTH_MEMBER
+        (
+            MEMBER_NO,
+            AUTH_CODE
+        )
+        VALUES
+            (
+                SEQ_MEMBER_NO.CURRVAL,
+                2
+            )
+    </insert>
+
+    <update id="updateMember">
+        UPDATE tbl_member
+        SET MEMBER_ID = #{memberId}
+        <if test="memberPwd != null and memberPwd !='' ">
+          , MEMBER_PWD = #{memberPwd}
+        </if>
+          , MEMBER_NAME = #{memberName}
+          , MEMBER_EMAIL = #{memberEmail}
+        <if test="memberGender != null and memberGender !='' ">
+          , MEMBER_GENDER = #{memberGender}
+        </if>
+          , MEMBER_PHONE = #{memberPhone}
+          , MEMBER_ADDRESS = #{memberAddress}
+        WHERE MEMBER_LEAVE_YN = 'N'
+          AND MEMBER_NO = #{memberNo}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE tbl_member
+           SET MEMBER_PWD = #{memberPwd}
+         WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <update id="deleteMember">
+        UPDATE tbl_member
+           SET MEMBER_LEAVE_YN = 'Y', MEMBER_LEAVE_REASON = #{ memberLeaveReason }
+         WHERE MEMBER_LEAVE_YN = 'N'
+           AND MEMBER_ID = #{ memberId }
+    </update>
+
+</mapper>

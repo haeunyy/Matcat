@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<title>Mypage</title>
+	<link href="/css/BeforeUpdate.css" rel="stylesheet">
+	<script src="/js/BeforeUpdate.js" type="text/javascript"></script>
+</head>
+<div th:replace="/common/header.html"></div>
+<body>
+<div th:replace="/common/sidebar.html"></div>
+<div class="login-container">
+	<form action="/member/update" id="before" method="post">
+		<table id="text-box">
+			<tr>
+				<th class="insertid">
+					<label class="text">ID</label>
+				</th>
+				<td>
+					<input class="IDinsert" name="memberId" type="text" id="memberId" required>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label class="text">비밀번호</label>
+				</th>
+				<td>
+					<input class="PWDinsert" name="memberPwd" type="password" id="password" required>
+				<br><span id="pwc"></span>
+				</td>
+			</tr>
+			<div id="centerplz">
+				<input id="loginSubmit" type="button" value="본인인증">
+			</div>
+		</table>
+	</form>
+</div>
+</body>
+</html>

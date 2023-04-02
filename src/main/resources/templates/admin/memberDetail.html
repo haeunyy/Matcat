@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<title>memberDetail</title>
+	<link href="/css/memberDetail.css" rel="stylesheet">
+
+</head>
+<div th:replace="/common/AdminHeader.html"></div>
+<div th:replace="/common/AdminLeftSidebar.html"/>
+<div th:replace="/common/RightSidebar.html"/>
+<style>
+	#viewUpdatepage {
+		opacity: 0.3;
+	}
+	#submenu-fixed {
+		left: 84%;
+	}
+</style>
+
+<body>
+<div id="container">
+	<table class="info">
+		<tr class="id">
+			<th>
+				<label class="text">아이디</label>
+			</th>
+			<td><input name="memberId" readonly th:value="${ orderList[0].member.memberId }"></input></td>
+		</tr>
+		<tr class="name">
+			<th class="insertid">
+				<label class="text">이름</label>
+			</th>
+			<td><input name="nickname" readonly th:value="${ orderList[0].member.memberName }" type="text">
+			</td>
+		</tr>
+		<tr class="phone">
+			<th>
+				<label class="text">전화번호</label>
+			</th>
+			<td><input name="phone" readonly th:value="${ orderList[0].member.memberPhone }" type="tel"></td>
+		</tr>
+		<tr class="email">
+			<th>
+				<label class="text">이메일</label>
+			</th>
+			<td><input name="email" readonly th:value="${ orderList[0].member.memberEmail }" type="email">
+			</td>
+		</tr>
+	</table>
+<div id="second-container">
+	<table id="list">
+		<tr class="listName">
+			<th>구매 번호</th>
+			<th>상품 정보</th>
+			<th>구매 일자</th>
+			<th>결제 수단</th>
+			<th>결제 상태</th>
+		</tr>
+		<tr class="listName" th:each="order : ${ orderList }"
+		th:onclick="|location.href='/order/admin/ordDetail?no=${order.ordCode}'|">
+			<th:block th:if="${ order.ordCode != 0 }">
+				<th th:text="${ order.ordCode }"></th>
+				<th th:text="${ order.product.name }"></th>
+				<th th:text="${ order.payment.payDate }"></th>
+				<th th:text="${ order.payment.payType }"></th>
+				<th:block th:if="${order.status.statusCode} == 5">
+				<th th:classappend="${order.status.statusCode} =='5' ? 'last1'"
+				    th:text="${ order.status.statusName }" id="last1"></th>
+				</th:block>
+				<th:block th:if="${order.status.statusCode} != 5">
+				<th th:if="${ order.status.statusCode != 5}"
+				    th:text="${ order.status.statusName }" id="last2"></th>
+				</th:block>
+			</th:block>
+			<th:block th:if="${ order.ordCode == 0}">
+				<th></th>
+				<th></th>
+				<th>구매 내역이 없습니다.</th>
+				<th></th>
+				<th></th>
+			</th:block>
+		</tr>
+	</table>
+	<div align="center" id="paging" style="margin-top: 13px;">
+			<!-- << -->
+			<button
+					th:disabled="${ paging.page <= 1}"
+					th:onclick="|location.href='/admin/memberDetail?no=${orderList[0].member.memberNo}&page=1'|"
+					>
+				&lt;&lt;
+			</button>
+			<!-- < -->
+			<button
+					th:disabled="${ paging.page <= 1 }"
+					th:onclick="|location.href='/admin/memberDetail?no=${orderList[0].member.memberNo}&page=${paging.page-1}'|"
+					>&lt;
+			</button>
+			<!-- 숫자버튼 클릭못하게 하기 -->
+			<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+				<button
+						th:disabled="${ paging.page eq page }"
+						th:onclick="|location.href='/admin/memberDetail?no=${orderList[0].member.memberNo}&page=${page}'|" th:text="${ page }"
+						>
+				</button>
+			</th:block>
+			<!-- > -->
+			<button
+					th:disabled="${ paging.page >= paging.maxPage }"
+					th:onclick="|location.href='/admin/memberDetail?no=${orderList[0].member.memberNo}&page=${paging.page + 1}'|"
+					>>
+			</button>
+			<!-- >> -->
+			<button
+					th:disabled="${ paging.page >= paging.maxPage }"
+					th:onclick="|location.href='/admin/memberDetail?no=${orderList[0].member.memberNo}&page=${paging.maxPage}'|"
+					>
+				>>			</button>
+		
+		</th:block>
+	</div>
+</div>
+</div>
+</div>
+</body>
+</html>

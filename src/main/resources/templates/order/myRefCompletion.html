@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/order.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orderCompletion.css">
+    <script>
+        const message = '[[${message}]]';
+	    message && alert(message);
+    </script>
+</head>
+<body>
+    <div th:replace="common/header.html"></div>
+    <div>
+        <h1 class="tableheader">반품 신청 완료<hr></h1>
+        <table id="order-list">
+            <tbody>
+                <tr th:each="order: ${order}">
+                    <td><img src="/image/001.png" alt="상품1"></td>
+                    <td>[엄마손] 떡튀순 세트</td>
+                    <td>2개</td>
+                    <td>10,000원</td>
+                    <td>20,000원</td>      
+                </tr>
+                <tr>
+                    <td><img src="/image/002.png" alt="상품2"></td>
+                    <td>멍게비빔밥</td>
+                    <td>1개</td>
+                    <td>15,000원</td>
+                    <td>15,000원</td>
+                </tr>
+                <tr>
+                    <td><img src="/image/003.png" alt="상품3"></td>
+                    <td>장어덮밥과 군만두</td>
+                    <td>3개</td>
+                    <td>20,000원</td>
+                    <td>60,000원</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="infomation-form" class="wrapper">
+        <table id="table-left" class="wrap-left">
+      		<tr>
+                <td>반품 정보</td>
+            </tr>
+      		<tr>
+                <td>반품 번호</td>
+                <td class="table-rightSort" id="orderCode">AA0000000</td>
+            </tr>
+            <tr>
+                <td>반품자</td>
+                <td class="table-rightSort">회원명</td>
+            </tr>
+            <tr>
+                <td>핸드폰</td>
+                <td class="table-rightSort">010-0000-0000</td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td class="table-rightSort">email@gamail.com</td>
+            </tr>
+            <tr>
+                <td>결제 수단</td>
+                <td class="table-rightSort">카카오페이</td>
+            </tr>
+   	        <p class="p-font-small">
+                ※ 결제하신 수단으로만 환불되는 점 유의하여 주시기 바랍니다. 
+            </p>
+        </table>
+        <table id="table-right" class="wrap-right">
+        	<tr>
+                <td>결제 정보</td>
+            </tr>
+            <tr>
+                <td>상품 합계</td>
+                <td class="table-rightSort">82,000원</td>
+            </tr>
+            <tr>
+                <td>할인금액</td>
+                <td class="table-rightSort">0원</td>
+            </tr>
+            <tr>
+                <td>배송비</td>
+                <td class="table-rightSort">3000원</td>
+            </tr>
+            <tr>
+                <td>총 합계</td>
+                <td class="table-rightSort">85,000원</td>
+            </tr>
+        </table>
+    </div>
+        <div class="btn-flex">
+            <form action="/order" method="get">
+                <button><img src="/image/배송조회.png" alt="배송조회"></button>
+                <button><img src="/image/구매확정.png" alt="구매확정"></button>                
+                <button><img src="/image/반품취소신청.png" alt="반품취소신청"></button>
+                <button><img src="/image/이전으로.png" alt="이전으로"></button>
+            </form>
+        </div>
+    
+    <div th:replace="common/footer.html"></div>
+</body>
+</html>

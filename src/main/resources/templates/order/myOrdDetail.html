@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+<link href="/css/orderCompletion.css" rel="stylesheet">
+<script>
+	const message = '[[${message}]]';
+	message && alert(message);
+</script>
+</head>
+<body>
+<div th:replace="common/header.html"></div>
+<div>
+	<h1 class="tableheader">주문 내역<hr/></h1>
+	<table id="order-list">
+		<tbody>
+			<tr class="margin-10">
+       			<th colspan="3">상품 정보</th>
+       			<th>수량</th>
+       			<th>금액</th>
+        	</tr>
+			<th:block th:each="order : ${orderList}">
+				<tr th:each="ord : ${order.ordDetails}">
+					<td colspan="2"><img th:src="${ord.products.filesList[0].thumbPath}"/></td>
+					<td colspan="1" th:text="${ord.products.name}"></td>
+					<td th:text="${ord.ordCount}"></td>
+					<td th:text="${#numbers.formatInteger(ord.products.price, 3, 'COMMA')+' 원'}"></td>
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+</div>
+<div class="wrapper" id="infomation-form">
+	<table class="wrap-left" id="table-left">
+		<tr>
+			<td><h2>주문 정보</h2></td>
+		</tr>
+		<tr>
+			<td>주문 번호</td>
+			<td class="table-rightSort" id="orderCode"  th:text="${orderCode}"/></td>
+		</tr>
+		<tr>
+			<td>수령자</td>
+			<td th:text="${ #authentication.principal.memberId }"></td>
+		</tr>
+		<tr>
+			<td>핸드폰</td>
+			<td th:text="${ #authentication.principal.memberPhone }"></td>
+		</tr>
+		<tr>
+			<td>이메일</td>
+			<td th:text="${ #authentication.principal.memberEmail }" ></td>
+		</tr>
+		<tr>
+			<td>배송지</td>
+			<td th:text="${ #lists.size(memberAddress) > 0 ? memberAddress[1] : '' }"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td th:text="${ #lists.size(memberAddress) > 0 ? memberAddress[2] : '' }"></td>
+		</tr>
+		<tr>
+			<td>결제 수단</td>
+			<td class="table-rightSort">카카오페이</td>
+		</tr>
+	</table>
+	<table class="wrap-right" id="table-right">
+		<tr>
+			<td><h2>결제 정보</h2></td>
+		</tr>
+		<tr>
+			<td>상품 합계</td>
+			<th:block th:each="order : ${orderList}">
+				<td th:text="${#numbers.formatInteger(order.ordPrice,3,'COMMA')}+' 원'"></td>
+			</th:block>
+		</tr>
+		<tr>
+			<td>할인금액</td>
+			<td class="table-rightSort">0원</td>
+		</tr>
+		<tr>
+			<td>배송비</td>
+			<td class="table-rightSort">0원</td>
+		</tr>
+		<tr>
+			<td>총 합계</td>
+			<th:block th:each="order : ${orderList}">
+				<td th:text="${#numbers.formatInteger(order.ordPrice ,3,'COMMA')}+' 원'"></td>
+			</th:block>
+		</tr>
+	</table>
+</div>
+<div class="btn-flex">
+		<a href="/order/myOrdList"><img alt="이전으로" src="/image/이전으로.png"></a>
+</div>
+
+<div th:replace="common/footer.html"></div>
+</body>
+</html>

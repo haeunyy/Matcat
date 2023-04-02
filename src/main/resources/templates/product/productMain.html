@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 관리 메인페이지</title>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/EH_css_product.css">
+
+
+
+   	<!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+	
+	<script>
+	const message = '[[${message}]]';
+	message && alert(message);
+	</script>
+</head>
+
+<!-- 헤더 -->
+<div th:replace="/common/AdminHeader.html"></div>
+
+<body>
+    <!-- 사이드바  -->
+	<div id="sidebar">
+		<ul>
+			<li><a href="/product/list" style="color: black;">상품 목록</a></li>
+			<li><a href="/product/regist">상품 등록</a></li>
+			<li><a href="#">상품 수정</a></li>
+		</ul>
+	</div>
+	
+	<!-- 오른쪽 사이드바 -->
+<!-- 	<div id="submenu-fixed">
+        <br>
+        <a>바로가기</a><br><br>
+        <a id="submypage" href="/member/mypage"><img src="/image/submypage.png"></a>
+        <a id="subjang" href="/main/cart/list"><img src="/image/subjang.png"></a> <br>
+        <a id="subhelp" href="/user/userHelp001"><img src="/image/subhelp.png"></a>
+        <a id="subhome" href="/main"><img src="/image/subhome.png"></a>
+    </div> -->
+    
+    <!-- 상품관리 메인페이지 시작 -->
+    <div id="content">
+        <!-- 상품 메인 상단 -->
+        <div id="prdt-box">
+            <p>등록된 상품 목록</p>
+        </div>
+
+        <!-- 상품 검색 -->
+        
+        <!-- 상품리스트 -->
+        <!-- 참고한 블로그 https://dheldh77.tistory.com/entry/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C%EB%B2%A0%EC%9D%B4%EC%A7%81-%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0 -->
+        <section class="prdt-list">
+            <div id="container">
+                <!-- 상품 목록 -->
+                <div id="item-list">
+                	<div id="cardlist">
+                	<th:block th:each="product : ${ productList }">
+	                    <div id="prtcard">
+	                        <div id="img">
+	                        	<th:block th:each="files : ${ product.filesList }">
+	                            <img th:if="${ files.thumbYN == 'Y' }" th:src="${ files.thumbPath }">
+	                           	</th:block>
+	                        </div>
+	                        <div id="text">
+	                        	<p id="prdcode">상품코드 : <label th:text="${product.code}"></label></p>
+	                            <h3><span th:text="${product.name}"></span></h3>
+	                            <p id="prdprice"><span th:text="${product.price}"></span>원</p>
+	                           <!--  <button><a href="#">수정하기</a></button>
+	                            <button><a href="#">삭제하기</a></button> -->
+	                        </div>
+	                    </div>
+                	</div>
+                    </th:block><br><br><br><br><br><br>
+						<div id="paging" align="center" style="margin-top: 20px;">
+							<!-- 맨 앞으로 이동 -->
+							<button th:onclick="'location.href=\'/product/list?page=1\''" class="btn btn-success">&lt;&lt;</button>
+				
+							<!-- 이전 페이지로 이동 -->
+							<button
+								th:onclick="'location.href=\'/product/list?page=' + @{${paging.page - 1}} + '\''"
+								th:disabled="${ paging.page <= 1 }" class="btn btn-success"
+							>
+								&lt;
+							</button>
+				
+							<!-- 숫자 버튼 -->
+							<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+								<button
+									th:onclick="'location.href=\'/product/list?page=' + @{${page}} + '\''"
+									th:text="${ page }" th:disabled="${ paging.page eq page }"
+								>
+								</button>
+							</th:block>
+				
+							<!-- 다음 페이지로 이동 -->
+							<button th:onclick="'location.href=\'/product/list?page=' + @{${paging.page + 1}} + '\''"
+							 th:disabled="${ paging.page >= paging.maxPage }">
+							>
+							</button>
+				
+							<!-- 맨 끝으로 이동 -->
+							<button th:onclick="'location.href=\'/product/list?page=' + @{${paging.maxPage}} + '\''">
+							>>
+							</button>
+						</div>
+                 </div>
+             </div>
+        </section>
+</div>
+    <!-- 상품관리 메인페이지 끝 -->
+
+
+
+</body>
+
+</html>

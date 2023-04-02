@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>review</title>
+
+    <link rel="stylesheet" href="/css/review.css">
+
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" 
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" 
+    crossorigin="anonymous">
+</script>
+
+</head>
+<body>
+    
+        <div th:replace="/common/header.html"></div>
+       <div th:replace="/common/RightSidebar.html"></div>
+<div id="matcat">
+<div id="container">
+        <h1 align="center" id="reviewregist">리뷰 작성</h1>
+
+        <form id="reviewregistform" action="" method="post">
+            <table style="margin:auto;">
+            <tr>
+                <td>제목</td>
+                <td colspan="3"><input  id="titlename" type="text" name="title"></td>
+            </tr>
+            <tr>
+                <td>이미지 첨부</td>
+                <td colspan="3">
+                    <div id="image-area">
+                        <img >
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td colspan="3"><textarea name="body" cols="36" rows="5"
+                        style="resize:none;" placeholder="0/180"></textarea></td>
+            </tr>
+        </table>
+        <div style="display: none;">
+            <input type="file" name="attachImage" accept="image/gif,image/jpeg, image/png">
+        </div>        
+        <br>
+        <div id=reviewoption align="center">
+            <button type="button" th:onclick="history.go(-1)">돌아가기</button>
+            <button type="reset">리셋</button>
+            <button type="submit">작성완료</button>
+        </div>
+
+        </form>
+        </div>
+        <script>
+            (function(){
+                /* div image-area 요소 */
+                const imageArea = document.querySelectorAll("#image-area");
+                /* input type=file 요소 */
+                const fileElements = document.querySelectorAll("[type=file]");
+                /* div 클릭 시 open 함수 동작 */
+                imageArea.forEach(item => item.addEventListener('click', open));
+                /* 파일 첨부가 발생하는 상황에 preview 함수 동작 */
+                fileElements.forEach(item => item.addEventListener('change', preview));
+                
+                function open() {
+                    const index = Array.from(imageArea).indexOf(this);
+                    fileElements[index].click();
+                }
+                
+                function preview() {
+                    const index = Array.from(fileElements).indexOf(this);
+                    console.log(this);
+                    console.log(this.files, this.files[0]);
+                    /* 첨부 된 파일이 존재한다면 */
+                    if(this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(this.files[0]);
+                        /* 파일 로드 후 동작하는 이벤트 설정 */
+                        reader.onload = function() {
+                            console.log(reader.result);
+                            if(index === 0)
+                                imageArea[index].innerHTML = `<img src='${reader.result}' style='width: 350px; height: 200px'>`;
+                            else
+                                imageArea[index].innerHTML = `<img src='${reader.result}' style='width: 120px; height: 100px'>`;
+                        }
+                    }
+                }
+                
+            })();
+        </script>
+		
+
+    </div>
+
+</body>
+</html>

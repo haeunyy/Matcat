@@ -1,0 +1,237 @@
+@charset "UTF-8";
+
+
+.pic {
+    width:180px;
+    height:130px;
+}
+
+/* 구글 웹폰트 */
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+}
+
+body {
+    margin : auto;
+    width:1440px;
+    height:1024px;
+}
+/* 탑버튼*/
+#toTop {
+    position: fixed;
+    bottom: 100px;
+    display: none;
+    z-index: 9999;
+}
+
+
+/* MATCAT 기본 배경 색*/
+html {
+    background-color: #FBF9F1;
+    text-align: center;
+    width:100%;
+    margin:auto;
+}
+
+
+/*-------------------------------body-------------------------------*/
+
+
+/* 추천메뉴 사진이랑 옵션들 전체 툴*/
+#picture {
+    display: flex;
+    margin:auto;
+    margin-top: 8%;
+}
+
+
+
+#productform {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: space-evenly;
+}
+/* 사진 이름 가격 '바로구매' '카트에 담기' 수량 옵션 */
+.product_set {
+    font-size: 1.5rem;
+    padding-left: 40px;
+    margin-bottom:4%;
+}
+/* 왼쪽 카테고리 창*/
+.categorymenu {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 30%;
+    right: 78%;
+}
+
+.ctg {
+    border-radius: 8px;
+    color: white;
+    background-color:#2B7C1E;
+    border: #2B7C1E;
+    font-size: 90%;
+    margin-top: 10%;
+    padding: 3px 20px 3px 20px;
+
+}
+.ctg:hover {background-color: #5aa94e;}
+
+.ctg:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+/* 검색결과*/
+#searchfont {
+    margin: auto;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2B7C1E;
+    padding: 30px 20px;
+    border-radius: 10px;
+
+}
+
+#searchfont a{
+    color: white;
+    font-size: 2rem;
+
+}
+/* 검색결과 아래 검색창 길이 높이 */
+/* #search-txt_2 {
+    margin-top: 20px;
+    width: 100%;
+    height: 35px;
+} */
+
+/* 전체/출력 창 및 정렬순 바 */
+#countmenu {
+    width:72%;
+    margin-left: 17%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 전체/출력  신상품 / 베스트상품 / 높은 가격순 / 낮은 가격순 */
+.menuoption {
+    display: flex;
+    list-style-type: none;
+    font-size: 13px;
+    margin-top : 3%;
+    margin-right: 130px;
+}
+
+/* 글자두께 설정*/
+.all {font-weight: bold;}
+.semiall {font-weight: bold;}
+
+/* 단어 사이사이 공간*/
+.menuoption li {
+    margin-right: 10px;
+
+}
+
+/* 신상품 / 베스트상품 / 높은 가격순 / 낮은 가격순 상세 설정*/
+.menuoptiontoll1 {
+    font-size: 16px;
+    margin-right: 20px;
+    background-color: #FBF9F1;
+    border: #FBF9F1;
+}
+.menuoptiontoll2 {
+    font-size: 16px;
+    margin-right: 20px;
+    background-color: #FBF9F1;
+    border: #FBF9F1;
+}
+.menuoptiontoll3 {
+    font-size: 16px;
+    margin-right: 20px;
+    background-color: #FBF9F1;
+    border: #FBF9F1;
+}
+
+.menuoptiontoll4 {
+    font-size: 16px;
+    margin-right: 20px;
+    background-color: #FBF9F1;
+    border: #FBF9F1;
+}
+
+.hello {
+    color: #b6b6b6;
+    border-radius: 10px;
+}
+.hello:hover{
+    background-color: #000000;
+    border: #000000;
+}
+
+/* 전체보기*/
+#allview {
+    border-radius: 10px;
+    color: white;
+    background-color:#6E9ADC;
+    border: #2B7C1E;
+    font-size: 14px;
+    padding: 5px 20px;
+}
+#allview:hover {
+    background-color: #a1c6ff;
+}
+#allview:active {
+    background-color: rgb(202, 202, 202);
+    color: black;
+}
+
+
+
+/* ------------------------------------------- 긴 선 ------------------------------------ */
+#hr {
+    border-style:double;
+    margin-top: 7px;
+    width: 62%;
+    margin-left: 19%;
+}
+
+#body-searchmenu {
+    margin-top: 2%;
+    margin:auto;
+    max-width:940px;
+}
+
+/* 검색해서 나온 메뉴들*/
+#searchmenu {
+    display:flex;
+    margin:auto;
+    margin-top: 5%;
+
+}
+#search_menu_btn {
+    border-radius: 5px;
+    color: white;
+    background-color:#2B7C1E;
+    border: #2B7C1E;
+    font-size: 0.7rem;
+    padding: 3px 7px;
+}
+#search_menu_btn:hover {
+    background-color: #5aa94e;
+}
+
+#search_menu_btn:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+/* ------------------------------------ 상품목록 / 검색페이지 끝 -----------------------------------*/
+
+
+#errormessage {
+    align-center:center;
+}

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI_SANG_001</title>
+    <link rel="stylesheet" href="/css/menusemi.css">
+    
+
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" 
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" 
+    crossorigin="anonymous"></script>
+
+</head>
+<body>
+     <div th:replace="/common/header.html"></div>
+       
+<a id="toTop" href="#"><img src="/image/화살표 좌.png"></a>
+
+        <div id="whiteback_head">
+            <th:block th:each="product : ${ semiProduct }">
+            <div id="topleft" th:each="file : ${product.filesList}">
+                <img id="bigpic" th:src="${file.thumbPath}">
+                <p id="sangim">
+                    <a>원재료명 및 함량</a>
+                    <a>소스[마늘(중국산), 고춧가루(중국산75.27%/국산24.73%), 쇠고기맛본다
+                    시, 복합조미식품, 자연치즈], 유탕면[소맥분(밀:미국산,호주산), 변성전분, 
+                    팜유(말레이시아산), 글루텐, 정제소금], 프레스햄1[돼지고기(국산), 양파(국
+                    산), 빵가루, 정제소금, 설탕], 소시지[돼지고기(지방일부사용), 닭고기(기계
+                    발골육), 옥수수전분, 정제소금, 설탕], 프레스햄2[돼지고기(지방일부사용), 
+                    옥수수전분, 함수결정포도당, 양파, 정제소금], 햄[돼지고기, 옥수수전분, 정
+                    제소금, 설탕, 함수결정포도당], 양배추, 양파, 가공치즈, 대파</a>
+                </p>
+            </div>
+            <div id="topright">
+                <a id="menuname" th:text="${ product.name }"></a>
+                <a id="menusmallname" th:text="${ product.name }"></a>
+                <div id="statusprice">
+                    <a id="menustatus" th:text="${ product.status }"></a>
+                    <a id="menuprice" th:text="${ #numbers.formatInteger(product.price,3,'COMMA')+' 원' }"></a>
+                </div>
+                <form name="pricesum" action="/order/form" th:object="${productList}">
+	                <div id="buy">
+	                   <label for="sell_price">수량</label>&nbsp;
+		                   <input type="hidden" name="sell_price" th:value="${ product.price }">
+		                   <input style="width:30px" type="number" name="amount" id="ordCount" value="1" step="1" size="1" max="10">
+		                   <input type="button" value=" + " name ="add">
+		                   <input type="button" value=" - " name ="minus">
+						   <input type="hidden" name="prdCode"  th:value="${ product.code }">&nbsp;&nbsp;
+	                   <label for="sum">총 금액</label>
+	                   	   <input style="width:90px" type="number" name="sum" size="5" onkeyup="comma(this);" readonly>원
+	                </div>
+                <script type="text/javascript">
+                	const formform=document.getElementsByName("pricesum"),
+                		  sell_price=document.pricesum.sell_price,
+                		  amount=document.pricesum.amount,
+                		  add=document.pricesum.add,
+                		  minus=document.pricesum.minus,
+                		  sum=document.pricesum.sum;
+                	
+                	if(formform) {
+                		sum.value=sell_price.value;
+                		
+                		let amountval=amount.value,
+                			sumval=sum.value,	
+                			priceval=sell_price.value;
+                		
+                		if(add){
+                			add.addEventListener('click',function(){
+                				amountval++;
+                				sumval=amountval*priceval;
+                				amount.value=amountval;
+                				sum.value=sumval;
+                				console. log (amountval,sumval,priceval);
+                			})
+                		}
+                		
+                		if(minus){
+                			minus. addEventListener ('click' , function(){
+                				if(amountval > 1){
+                					amountval--;
+                					sumval=amountval*priceval;
+                					amount.value=amountval;
+                					sum.value=sumval;
+                					console.log (amountval, sumval, priceval);
+                				}else{
+                				amountval=1;
+                				}
+                			})
+                		}
+                	}	
+                	/* 가격에 콤마 붙이는 자바스크립트 */
+                	/* 	function comma(str) {
+            				str = String(str);
+            				return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        				}
+
+        				function uncomma(str) {
+        				    str = String(str);
+        				    return str.replace(/[^\d]+/g, '');
+        				} 
+        
+        				function inputNumberFormat(obj) {
+        				    obj.value = comma(uncomma(obj.value));
+       				 	}
+        
+        				function inputOnlyNumberFormat(obj) {
+            				obj.value = onlynumber(uncomma(obj.value));
+        				}
+        
+        				function onlynumber(str) {
+    	    				str = String(str);
+    	    				return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
+    					} */
+                </script>
+   
+
+                <div id="buymenu">
+                    <button class="buymenubtn" th:onclick="|location.href='@{/cart/add}'|">장바구니</button>
+                    <button class="buymenubtn">바로구매</button>
+                    <button id="menuinformation">구매정보</button>
+                </div>
+                </form>
+            </div>
+			</th:block>
+        </div>
+
+        
+        <div id="outer">
+            <div id="menu">상품 정보 더 보기</div>
+            <p class="contents"><img src="/image/제품상세.png" width="90%"></p>
+        </div>
+
+        <script>
+            $(function(){
+                $("#menu").click(function(){
+                if($(this).next("p").css("display") === 'none') {
+                    $("p.contents").slideUp();          // 하나를 열고 다른걸 열면 자동으로 닫히면서 하나만 열리게 함
+                        $(this).next("p").slideDown();
+                } else {
+                        $(this).next("p").slideUp();  
+                }
+                });
+            });
+        </script>
+
+            <!-- 바디 끝 / 리뷰 작성공간을 알리는 선 -->
+        <hr id="bodyend">
+        
+        <div id="review_ground">
+            
+            <div id="review_head">
+                <a id="menu_review_head"><b>상품 후기</b></a>
+                <a id="picture_review"><b>사진 후기</b></a>
+                <a class="review_picture"><img src="/image/부대찌개사진.png" width="90%"></a>
+                <a class="review_picture"><img src="/image/부대찌개사진.png" width="90%"></a>
+                <a class="review_picture"><img src="/image/부대찌개사진.png" width="90%"></a>
+                <a class="review_picture"><img src="/image/부대찌개사진.png" width="90%"></a>
+                <a class="review_picture"><img src="/image/부대찌개사진.png" width="90%"></a>
+                <a class="review_picture"><img src="/image/부대찌개사진.png" width="90%"></a>
+                <a class="review_picture"><img src="/image/부대찌개사진.png" width="90%"></a>
+                <a class="review_picture" href="/review"><button id="review_writer">리뷰 작성</button></a>
+                <a id="reviewcount">총 32개</a><br>
+                <button id="newest">최신순 &nbsp;&nbsp;</button>
+                <button id="best_sequence">추천순</button>
+
+                <div class="member_review">
+                        <a class="member_grade">회원</a>
+                        <a class="member_name">김**</a>
+                        <a class="menu_name">백종원식 부대찌개</a><br>
+                        <a class="menu_review">간편하게 먹기가 좋았어요! 또 시킬게요~ 정말 좋네요 여기 다른사람들한테도 추천할게요 ~~</a> <!-- 이거 안붙이면 사잔이랑 글 위치가 안맞음 >>> --><br><br>
+                        <!-- 이미지 공간 -->
+                        <a class="img_ground"><img src="/image/부대찌개사진.png" width="10%"></a>
+                        <a id="upload_date">업로드 날짜(23.3.15)</a>
+                        <a id="review_endline"></a><br>
+                </div>
+
+                <div class="member_review">
+                    <a class="member_grade">회원</a>
+                    <a class="member_name">김**</a>
+                    <a class="menu_name">백종원식 부대찌개</a><br>
+                    <a class="menu_review">맛있어요~~맛요~~맛~맛있어요~~맛있어요~~맛있어요~~
+                        맛있어요~~맛있어요~~맛있어요~~</a>  <!-- 이거 안붙이면 사잔이랑 글 위치가 안맞음 >>> --><br><br>
+                    <!-- 이미지 공간 -->
+                    <a class="img_ground"><img src="/image/부대찌개사진.png" width="10%"></a>
+                    <a id="upload_date">업로드 날짜(23.3.15)</a>
+                    <a id="review_endline"></a><br>
+                </div>
+                
+
+                <div id="review_outer">
+                    <div id="review_addview">더 보기</div>
+                    <p class="contents2">
+                        <!-- 리뷰 링크 연결? 하면 뜸-->
+                        <img src="/image/리뷰더보기.png" id="repic" width="110%">
+                    </p>
+                </div>
+            </div>
+            
+            <script>
+                $(function(){
+                    $("#review_addview").click(function(){
+                    if($(this).next("p").css("display") === 'none') {
+                        $("p.contents2").slideUp();          // 하나를 열고 다른걸 열면 자동으로 닫히면서 하나만 열리게 함
+                            $(this).next("p").slideDown();
+                    } else {
+                            $(this).next("p").slideUp();  
+                    }
+                    });
+                });
+            </script>
+
+        </div>
+
+        <div id="etc">
+
+            <div id="left_etx">
+                <a id="a1">고객행복센터</a>
+                <a id="a2">1644-1234&nbsp;&nbsp;&nbsp;&nbsp;<small>월~토요일 오전 7시-오후 6시</small></a>
+                <div class="etc_button">
+                    <button class="kakao">카카오톡 문의</button>
+                    <label>월~토요일 | 오전 7시 - 오후 6시  </label> <label> / 월~토요일 | 오전 7시 - 오후 6시</label>
+                </div>
+
+                <div class="etc_button">
+                    <button class="kakao">대량주문 문의</button>
+                    <label>월~토요일 | 오전 7시 - 오후 6시  </label> <label> / 월~토요일 | 오전 7시 - 오후 6시</label>
+                 </div>
+
+                <div class="etc_button">
+                    <button class="kakao">1대1 문의</button>
+                    <label>365일 고객센터 운영시간에 순차적으로 답변드리겠습니다</label>
+                </div>
+
+                <a class="etc_email">비회원 문의 : matcat@greedy.com</a>
+                <a class="etc_email">비회원 대량주문 문의 : matcat@greedy.com</a>
+
+            </div>
+
+            <div id="right_ect">
+                <a id="b1">MatCat소개&nbsp;&nbsp;인재채용&nbsp;&nbsp;이용약관&nbsp;&nbsp;<b>개인정보처리방침</b>&nbsp;&nbsp;이용안내</a>
+                <a class="b2">법인명(상호):주식회사 맛캣 | 사업자등록번호:123-45-67890 사업자정보 확인</a>
+                <a class="b2">통신판매업:제 2023-서울종로-012345호 | 개인정보보호책임자:홍길동</a>
+                <a class="b2">주소:서울특별시 종로구 하이미디어 123,15층(인사동) | 대표이사:김슬아</a>
+                <a class="b2">입점문의:<mark>입점문의하기</mark> | 제휴문의 : matcat@greedy.com</a>
+                <a class="b2">채용문의:matcat@greedy.com</a>
+                <a class="b2">팩스:070-1234-1234</a>
+            </div>
+
+
+
+        </div>
+
+        <!-- 탑버튼 자바스크립트 -->
+        <script>
+            $(function() {
+                 $(window).scroll(function() {
+                   if ($(this).scrollTop() > 200) {
+                        $('#toTop').fadeIn();            
+                        $('#toTop').css('left', $('#sidebar').offset());
+                    } else {
+                          $('#toTop').fadeOut();
+                    }
+                });
+                    $("#toTop").click(function() {
+                    $('html, body').animate({
+                        scrollTop : 0
+                        }, 400);
+                    return false;
+                });
+            });
+        </script>
+
+       <!-- footer -->
+    <div th:replace="/common/footer.html"></div>
+</body>
+</html>

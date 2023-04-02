@@ -1,0 +1,202 @@
+html {
+    background-color: #FBF9F1;
+}
+
+body {
+	margin:auto;
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+}
+
+
+
+/* 회원가입 컨테이너*/
+.login-container {
+    width: 63%;
+    height: 69%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+}
+/*맨위에 회원가입*/
+.main-text {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+
+}
+/* 약관동의 정보입력 가입완료  (단계)*/
+.sub-text {
+	width:75%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 20px;
+    margin:auto;
+    margin-top:-4%;
+}
+/* 정보 입력하는 전체 테이블 */
+.table {
+    display: flex;
+    margin: 0px 0px 0px 19%;
+    padding: 1%;
+    font-size:120%;
+}
+
+.table tr {
+    display: flex;
+}
+
+tr th{
+	display:flex;
+	margin-top:1%;
+    width: 200px;
+    font-family: 'Inter';
+}
+
+tr td {
+    display: flex;
+    margin-left:-1%;
+    padding-bottom: 20px;
+    justify-content: center;
+}
+/* 성별*/
+.nono {
+    padding-left: 8px;
+    margin-right: 125px;
+    width: 30px;
+    height: 30px;
+    
+}
+
+input {
+    width: 200px;
+    height:20px;
+    
+}
+
+.text-rainbow {
+    background-image: linear-gradient(90deg, red, orange, #5f5f39, green, blue, navy, purple);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+#text_rain {
+	padding-left: 2%;
+}
+
+/* 중복확인 버튼 */
+#duplicationCheck {
+    background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    font-size: 1rem;
+  	width:100%;
+  	padding: 1px 20px 1px 20px;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+    margin-left:40%;
+    margin-top:3%;
+}
+#duplicationCheck:hover {
+	background-color: #5aa94e;
+}
+
+#duplicationCheck:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+/*확인 버튼*/
+#DoubleCheck {
+	background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    width:100%;
+    font-size: 1rem;
+  	padding: 1px 20px 1px 20px;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+    margin-left:60%;
+    margin-top:3%;
+}
+#DoubleCheck:hover {
+	background-color: #5aa94e;
+}
+
+#DoubleCheck:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+/* 검색 버튼*/
+#searchZipCode {
+	background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    width:100%;
+    font-size: 1rem;
+  	padding: 1px 20px 1px 20px;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+    margin-left:60%;
+    margin-top:3%;
+}
+#searchZipCode:hover {
+	background-color: #5aa94e;
+}
+
+#searchZipCode:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+/* 가입하기*/
+#joinbtn {
+   background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    width:15%;
+    height:100%;
+    font-size: 1.5rem;
+  	padding: 1px 20px 1px 20px;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+}
+#joinbtn2 {
+   background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    width:15%;
+    height:100%;
+    font-size: 1rem;
+  	padding: 1px 20px 1px 20px;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+}
+#joinbtn:hover {
+	background-color: #5aa94e;
+}
+
+#joinbtn:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+#joinbtn2:hover {
+	background-color: #5aa94e;
+}
+
+#joinbtn2:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ErrorPage</title>
+</head>
+<script>
+	const message = '[[${message}]]';
+	message && confirm(message);
+	if (confirm(message)) {
+		location.href="/main"
+	} else {
+		location.href="/member/login"
+	}
+</script>
+<body>
+	<h1 align="center">허용되지 않은 접근입니다.</h1>
+</body>
+</html>

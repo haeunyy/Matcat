@@ -1,0 +1,100 @@
+html {
+    width: 100vh;
+    height: 100vh;
+    background-color: #FBF9F1;
+}
+
+body {
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+    margin-left: 240px;
+    margin-right: 240px;
+}
+
+.container {
+    width: 65%;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    background-color: #FBF9F1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.newBoard1,
+.newBoard2 {
+    margin-top: 50px;
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.newBoard3 {
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    box-shadow: 6px 10px 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table1,
+.table2,
+.table3 {
+    width: 400px;
+    height: 40px;
+    position: relative;
+    margin-top: 60px;
+    border: solid 0px;
+}
+
+.table1{
+    display: flex;
+    justify-content: center;
+    border-collapse: collapse;
+}
+
+.table1 th {
+    font-size: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 30px;
+}
+
+.table1 th:first-child {
+    padding-left: 0px;
+}
+
+.table2 {
+    font-size: 30px;
+    margin-top: 105px;
+}
+.table2 th {
+    font-size: 15px;
+    padding-bottom: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+}
+
+ul li {
+    color: white;
+}
+
+ul li:first-child {
+
+}

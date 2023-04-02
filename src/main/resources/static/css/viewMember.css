@@ -1,0 +1,111 @@
+html {
+    width: 100vh;
+    height: 100vh;
+    background-color: #FBF9F1;
+}
+
+body {
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+    margin-left: 240px;
+    margin-right: 240px;
+}
+
+#container {
+    position: relative;
+    width: 70%;
+    height: 65%;
+    margin-left: 270px;
+    margin-right: auto;
+    margin-top: 30px;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+}
+
+#whiteContainer {
+    width: 90%;
+    height: 496px;
+    margin: 0px auto;
+    background-color: #ffffff;
+}
+#list {
+    display: flex;
+    justify-content: space-around;
+    border-collapse: collapse
+}
+
+#list th {
+    font-size: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#list th:nth-child(2) {
+    width: 65px;
+}
+
+#list th:nth-child(3) {
+    width: 95px;
+}
+
+#list th:nth-child(4) {
+    width: 300px;
+}
+
+#list th:nth-child(5) {
+    width: 187px;
+}
+
+#list th:nth-child(6) {
+    width: 117px;
+}
+
+#listName {
+    border-bottom: solid 1px black;
+}
+
+#listName:last-child{
+    border-bottom: 0px;
+}
+
+#searchForm {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    margin-right: 20px;
+}
+
+.searchForm{
+    display: flex;
+    justify-content: flex-end;
+    flex-basis: 100%;
+}
+
+.searchText{
+    border-radius: 5px;
+    border-color: lightgray;
+    border-width: 0.1px;
+    box-shadow: none;
+}
+
+#searchForm > * {
+    border-color: lightgray;
+    margin-right: 5px;
+}
+
+#searchForm select {
+    border-radius: 5px;
+}
+
+#searchForm button{
+    border-radius: 5px;
+    background-color: #6E9ADC;
+    border: none;
+    box-shadow: none;
+}
+

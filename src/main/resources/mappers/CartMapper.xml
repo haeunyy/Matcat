@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.matcat.main.dao.CartMapper">
+	<resultMap type="com.greedy.matcat.main.dto.CartDTO" id="cartResultMap">
+		<id property="cartNo"          column="CART_NO"></id>
+		<result property="memberNo"    column="MEMBER_NO"></result>
+		<result property="productCode" column="PRD_CODE"></result>
+		<result property="quantity"    column="QUANTITY"></result>
+		<result property="cartPrice"   column="CART_PRICE"></result>
+		<association property="member" resultMap="memberResultMap"/>
+		<association property="products" resultMap="productResultMap"/>
+		<collection property="files" resultMap="filesResultMap"></collection>
+	</resultMap>
+	<!-- ProductDTO -->
+    <resultMap id="productResultMap" type="com.greedy.matcat.main.dto.ProductDTO">
+        <id property="code" column="PRD_CODE"/>
+        <result property="price" column="PRD_PRICE"/>
+        <result property="name" column="PRD_NAME"/>
+    </resultMap>
+    <!-- 파일 테이블 resultMap -->
+	<resultMap id="filesResultMap" type="com.greedy.matcat.main.dto.FilesDTO">
+		<id property="fileCode" column="FILE_IMG_CODE"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileSize" column="FILE_SIZE"/>
+		<result property="uploadDate" column="FILE_UPLOAD_DATE"/>
+		<result property="originName" column="FILE_ORIGIN_NAME"/>
+		<result property="savedName" column="FILE_SAVED_NAME"/>
+		<result property="fileDiv" column="FILE_DIV"/>
+		<result property="inqCode" column="INQ_CODE"/>
+		<result property="postCode" column="POST_CODE"/>
+		<result property="revCode" column="REV_CODE"/>
+		<result property="prdCode" column="PRD_CODE"/>
+		<result property="thumbYN" column="THUMB_YN"/>
+		<result property="thumbPath" column="THUMB_PATH"/>
+	</resultMap>
+	 <!-- MemberDTO -->
+    <resultMap id="memberResultMap" type="com.greedy.matcat.member.dto.MemberDTO">
+        <id property="memberNo" column="MEMBER_NO"/>
+        <result property="memberId" column="MEMBER_ID"/>
+        <result property="memberPwd" column="MEMBER_PWD"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="memberEmail" column="MEMBER_EMAIL"/>
+        <result property="memberGender" column="MEMBER_GENDER"/>
+        <result property="memberPhone" column="MEMBER_PHONE"/>
+        <result property="memberAddress" column="MEMBER_ADDRESS"/>
+        <result property="memberLeaveYN" column="MEMBER_LEAVE_YN"/>
+        <result property="memberGrade" column="MEMBER_GRADE"/>
+        <result property="memberLeaveReason" column="MEMBER_LEAVE_REASON"/>
+        <collection property="memberRoleList" resultMap="authMemberResultMap"/>
+    </resultMap>
+    <!-- AuthMemberDTO -->
+    <resultMap id="authMemberResultMap" type="com.greedy.matcat.member.dto.AuthMemberDTO">
+        <id property="memberNo" column="REF_MEMBER_NO"/>
+        <id property="authorityCode" column="REF_AUTH_CODE"/>
+        <association property="authority" resultMap="authorityResultMap"/>
+    </resultMap>
+    <!-- AuthorityDTO -->
+    <resultMap id="authorityResultMap" type="com.greedy.matcat.member.dto.AuthorityDTO">
+        <id property="authCode" column="REF_AUTH_CODE2"/>
+        <result property="authName" column="AUTH_NAME"/>
+        <result property="authExplanation" column="AUTH_EXPLANATION"/>
+    </resultMap>
+	
+	<!-- 카트 중복 체크 --> 	
+	<select id="checkCart" resultMap="cartResultMap">
+		SELECT 
+				* 
+		  FROM TBL_CART 
+		 WHERE MEMBER_NO = #{memberNo} 
+		 AND PRD_CODE = #{prdCode}
+	</select>
+	
+	<!-- 카트에 상품 추가 -->
+	<insert id="addCart">
+	INSERT 
+		INTO TBL_CART
+		(CART_NO, MEMBER_NO, PRD_CODE, QUANTITY, CART_PRICE)
+		VALUES
+		(
+		 SEQ_CART_NO.NEXTVAL
+		 , #{ memberNo } 
+		 , #{ productCode } 
+		 , #{ quantity } 
+		 , #{ cartPrice } 
+		 )
+	</insert>
+	
+	<!-- 장바구니 조회 -->
+	<select id="goCart" resultMap="cartResultMap">
+		SELECT
+	           A.CART_NO
+	         , A.MEMBER_NO
+	         , D.THUMB_YN
+	         , D.THUMB_PATH
+	         , A.PRD_CODE
+	         , E.PRD_NAME
+	         , A.QUANTITY
+	         , A.CART_PRICE
+          FROM (SELECT
+                       ROWNUM RNUM
+                     , B.CART_NO
+                     , B.MEMBER_NO
+			         , B.PRD_CODE
+			         , B.QUANTITY
+			         , B.CART_PRICE
+                  FROM (SELECT
+                               C.CART_NO   
+					         , C.MEMBER_NO 
+					         , C.PRD_CODE  
+					         , C.QUANTITY  
+					         , C.CART_PRICE
+                          FROM TBL_CART C
+        				 ORDER BY C.CART_NO DESC
+        				) B
+        <![CDATA[
+                  WHERE ROWNUM <= #{ endRow }
+                  ]]>
+        ) A
+        JOIN TBL_FILES D ON (A.PRD_CODE = D.PRD_CODE)
+        JOIN TBL_PRODUCT E ON(A.PRD_CODE = E.PRD_CODE)
+        WHERE A.RNUM >= #{ startRow }
+         AND A.MEMBER_NO = #{memberNo}
+        ORDER BY 1 DESC
+	</select>
+	
+	
+ 	
+	<!-- 카트로 이동 -->	
+<!-- 
+	<select id="goCartList" resultMap="cartResultMap">
+		SELECT 
+				C.CART_NO,
+				C.QUANTITY,
+				P.PRD_NAME,
+				#{image-dir} || F.THUMB_PATH AS  F.THUMB_PATH
+		   FROM TBL_CART C
+		  INNER JOIN TBL_PRODUCT P ON (C.PRD_CODE = P.PRD_CODE)
+		  INNER JOIN TBL_FILES F ON (C.PRD_CODE = F.PRD_CODE)
+		 WHERE C.MEMBER_NO = #{memberNo}
+	</select>
+-->
+
+	<!-- 장바구니 상품 한 개 select -->
+<!-- 	
+	<select id="findByMemberNoAndPrdCode">
+		SELECT 
+				* 
+			FROM TBL_CART 
+		  WHERE CART_NO=#{cartNo} 
+		  AND PRD_CODE=#{productCode}
+	</select>
+-->	
+ 
+ 	<!-- 장바구니 상품 개수 증가 -->
+<!--  	
+	<update id="updateQuantPlus">
+		UPDATE TBL_CART
+			SET QUANTITY = QUANTITY + #{quantity}
+		WHERE CART_NO = #{cartNo}
+		AND PRD_CODE = #{productCode}
+	</update>
+ -->
+
+
+	<!-- 장바구니 상품 개수 증가 -->
+<!-- 
+	<update id="updateQuantMinus">
+		UPDATE TBL_CART
+			SET QUANTITY = QUANTITY - #{quantity}
+		WHERE CART_NO = #{cartNo}
+		AND PRD_CODE = #{productCode}
+	</update>
+	장바구니 상품 하나 삭제
+	<delete id="deleteOne">
+		DELETE 
+			FROM TBL_CART 
+		  WHERE CART_NO = #{cartNo} 
+		  AND PRD_CODE = #{productCode}
+	</delete>
+ -->
+ 
+ <!-- 	장바구니에 상품 담기 -->
+<!-- 
+	<insert id="saveOneProduct">
+		INSERT 
+			INTO TBL_CART 
+			VALUES
+			(
+				SEQ_CART_NO.NEXTVAL,
+				#{memberNo},
+				#{productCode},
+				#{quantity},
+				#{cartPrice}
+			)
+	</insert>
+ -->
+</mapper>

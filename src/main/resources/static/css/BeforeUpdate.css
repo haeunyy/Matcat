@@ -1,0 +1,76 @@
+html {
+    background-color: #FBF9F1;
+}
+
+body {
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+    margin:auto;
+}
+
+.login-container {
+    width:63%;
+    height: 60%;
+    margin:auto;
+    margin-top: 6%;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+    
+    
+}
+
+.text {
+    font-size: 30px;
+    padding-right: 50px;
+    margin-bottom: 25px;
+}
+
+#before {
+     display: flex;
+     align-items: center;
+     padding: 20% 10% 5% 10%;
+     justify-content: center;
+     flex-direction: column-reverse;
+ }
+
+.IDinsert {
+    width: 407px;
+    height: 35px;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+.PWDinsert {
+    width: 407px;
+    height: 35px;
+    font-size: 1.5rem;
+}
+
+.insertid{
+    padding-bottom: 25px;
+}
+
+#loginSubmit {
+    width: 407px;
+    height: 35px;
+    color: #000000;
+    background-color: #2B7C1E;
+    cursor: pointer;
+    margin:auto;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 120%;
+    margin-top:6%;
+    box-shadow: 4px 4px 1px 0 rgba(0,0,0,0.25);
+}
+
+#centerplz {
+    display: flex;
+    align-items: center;
+    padding: 10% 10% 5% 10%;
+    justify-content: center;
+}
+
+#text-box input {
+    font-size: 120%;
+}

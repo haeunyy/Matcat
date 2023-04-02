@@ -1,0 +1,185 @@
+html {
+    
+    background-color: #FBF9F1;
+}
+
+body {
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+    margin:auto;
+}
+
+.login-container {
+    width:63%;
+    height: 61%;
+    margin:auto;
+    margin-top: 6%;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+}
+
+#topname {
+	padding-top:4%;
+	font-size:2rem;
+	opacity: 40%;
+}
+
+.table {
+    display: flex;
+    margin: 4% 0px 0px 21%;
+    padding: 1%;
+    font-size:120%;
+    
+}
+
+.table tr {
+    display: flex;
+}
+
+tr th{
+	display:flex;
+	margin-top:1%;
+    width: 200px;
+    font-family: 'Inter';
+}
+tr td {
+    display: flex;
+    margin-left:-1%;
+    padding-bottom: 20px;
+    justify-content: center;
+}
+
+
+.table input {
+   width: 200px;
+    height:20px;
+}
+
+.text-rainbow {
+    background-image: linear-gradient(90deg, red, orange, #5f5f39, green, blue, navy, purple);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: bold;
+}
+
+#pwc {
+    margin-left: 10px;
+}
+
+#duplicationCheck {
+    background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    font-size: 0.75rem;
+  	width:100%;
+  	padding: 1px 10px 1px 10px;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+    margin-left:36%;
+    margin-top:3%;
+}
+#duplicationCheck:hover {
+	background-color: #5aa94e;
+}
+
+#duplicationCheck:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+/*확인 버튼*/
+#DoubleCheck {
+	background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    width:100%;
+    font-size: 0.75rem;
+  	padding: 1px 20px 1px 20px;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+    margin-left:40%;
+    margin-top:3%;
+}
+#DoubleCheck:hover {
+	background-color: #5aa94e;
+}
+
+#DoubleCheck:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+/* 검색 버튼*/
+#searchZipCode {
+	background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    width:100%;
+    font-size: 0.75rem;
+  	padding: 1px 20px 1px 20px;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+    margin-left:40%;
+    margin-top:3%;
+}
+#searchZipCode:hover {
+	background-color: #5aa94e;
+}
+
+#searchZipCode:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+#heyhey {
+   background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    width:10%;
+    height:100%;
+    font-size: 1.2rem;
+  	padding: 1px 10px 1px 10px;
+  	box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+    
+}
+#heyhey:hover {
+	background-color: #5aa94e;
+}
+
+#heyhey:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+#submit2 {
+   background-color: #72c565;
+    cursor: pointer;
+    border: solid 0px #72c565;
+    border-radius: 3px;
+    width:10%;
+    height:100%;
+    font-size: 1.2rem;
+  	padding: 1px 10px 1px 10px;
+  	margin-left:2%;
+    box-shadow: 2px 2px 1px 0 rgba(0,0,0,0.25);
+}
+#submit2:hover {
+	background-color: #5aa94e;
+}
+
+#submit2:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+input[name="memberId"]{
+    border: none;
+    background-color: #f3f0f0;
+    text-align: center;
+}
+
+input[name="memberName"]{
+    border: none;
+    background-color: #f3f0f0;
+    text-align: center;
+}

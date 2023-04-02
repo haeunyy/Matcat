@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품등록페이지</title>
+
+	<!-- js -->
+	<!-- <script type="text/javascript" src="/js/productManage.js"></script> --> 
+
+	<!-- css -->
+    <link rel="stylesheet" href="/css/EH_css_product.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+</head>
+
+    <!-- 상단바 -->
+	<div th:replace="/common/AdminHeader.html"></div>
+	
+	
+	
+<body>
+    <!-- 사이드바  -->
+    <div id="sidebar">
+		<ul>
+			<li><a href="/product/list">상품 목록</a></li>
+			<li><a href="/product/regist" style="color: black;">상품 등록</a></li>
+			<li><a href="#">상품 수정</a></li>
+		</ul>
+	</div>
+	
+	<!-- 오른쪽 사이드바 -->
+<!-- 	<div id="submenu-fixed">
+        <br>
+        <a>바로가기</a><br><br>
+        <a id="submypage" href="/member/mypage"><img src="/image/submypage.png"></a>
+        <a id="subjang" href="/main/cart/list"><img src="/image/subjang.png"></a> <br>
+        <a id="subhelp" href="/user/userHelp001"><img src="/image/subhelp.png"></a>
+        <a id="subhome" href="/main"><img src="/image/subhome.png"></a>
+    </div>
+	 -->
+	
+	
+    <!-- 페이지 내용 작성 -->
+	<div id="content">
+        <form class="regist-form" action="/product/regist" method="post" enctype="multipart/form-data">
+            <div>
+                <h5>상품</h5>
+                <fieldset>
+                    <label>상품명</label><br>
+                    <input type="text" placeholder="상품명 입력(예:제품명)" name="name"><br><br>
+                    <div id="category">
+	                    <label>카테고리</label><br>
+	                    <input type="radio" name="categoryCode" id="korean" value="10">
+	                    <label for="korean">한식</label>
+	                    <input type="radio" name="categoryCode" id="western" value="20">
+	                    <label for="western">양식</label>
+	                    <input type="radio" name="categoryCode" id="chinese" value="30">
+	                    <label for="chinese">중식</label>
+	                    <input type="radio" name="categoryCode" id="japanese" value="40">
+	                    <label for="japanese">일식</label>
+	                    <input type="radio" name="categoryCode" id="ctgretc" value="50">
+	                    <label for="ctgretc">기타</label>
+                    </div>
+                </fieldset>
+            </div>
+            <br>
+            <div>
+                <h5>대표 이미지</h5>
+                <fieldset>
+                    <div id="img-area" align="center">
+                        <img style="width: 120px; height: 100px;">
+                    </div>
+                </fieldset>
+            </div><br>
+            <div>
+                <h5>상세정보</h5>
+                <fieldset>
+                    <label>상세 정보 이미지</label>
+                    <div id="img-area" align="center">
+                       <img style="width: 120px; height: 100px;">
+                    </div>
+                 </fieldset>
+                 <fieldset>
+                 	<label>영양성분표 이미지</label>
+                    <div id="img-area" align="center">
+                       <img style="width: 120px; height: 100px;">
+                    </div>
+                </fieldset>
+            </div><br>
+            <div>
+                <h5>가격</h5>
+                <fieldset>
+                    <label>판매가격</label><br>
+                    <input type="number" name="price" min="0" max="1000000" step="100">
+                </fieldset>
+            </div><br>
+            <div>
+                <h5>재고 및 상품 상태</h5>
+                <fieldset>
+                    <label>재고수량</label><br>
+                    <input type="number" name="quan" min="0" max="10000" step="1"><br><br>
+                    <label>상품 상태</label><br>
+                    <input type="radio" name="status" id="onsale" value="판매중">
+                    <label for="onsale">판매중</label>
+                    <input type="radio" name="status" id="soldout" value="일시품절">
+                    <label for="soldout">일시품절</label>
+                    <input type="radio" name="status" id="notsale" value="판매중단">
+                    <label for="notsale">판매중단</label>
+                </fieldset>
+            </div>
+            <div style="display: none;">
+                <input type="file" name="attachImage" accept="image/gif,image/jpeg,image/png"> 
+                <input type="file" name="attachImage" accept="image/gif,image/jpeg,image/png"> 
+                <input type="file" name="attachImage" accept="image/gif,image/jpeg,image/png"> 
+            </div>
+            <br><br><br>
+            <div id="regist-btn" align="center">
+                <button id="prdt-sbmt" type="submit">등록</button>
+                <button id="prdt-back" type="button" onclick="'location.href=\'/product/list\''">돌아가기</button>
+                <button id="prdt-rset" type="reset">취소</button>
+            </div>
+        </form>
+    </div>
+    <script>
+		(function(){
+			/* div img-area 요소 */
+			const imageArea = document.querySelectorAll("#img-area");
+			/* input type=file 요소 */
+			const fileElements = document.querySelectorAll("[type=file]");
+			/* div 클릭 시 open 함수 동작 */
+			imageArea.forEach(item => item.addEventListener('click', open));
+			/* 파일 첨부가 발생하는 상황에 preview 함수 동작 */
+			fileElements.forEach(item => item.addEventListener('change', preview));
+			
+			function open() {
+				const index = Array.from(imageArea).indexOf(this);
+				fileElements[index].click();
+			}
+			
+			function preview() {
+				const index = Array.from(fileElements).indexOf(this);
+				console.log(this);
+				console.log(this.files, this.files[0]);
+				if(this.files && this.files[0]) {
+					const reader = new FileReader();
+					reader.readAsDataURL(this.files[0]);
+					/* 파일 로드 후 동작하는 이벤트 설정 */
+					reader.onload = function() {
+						console.log(reader.result);
+						if(index === 0)
+							imageArea[index].innerHTML = `<img src='${reader.result}' style='width: 350px; height: 200px'>`;
+						else
+							imageArea[index].innerHTML = `<img src='${reader.result}' style='width: 120px; height: 100px'>`;
+					}
+				}
+			}
+		})();
+	</script>
+</body>
+</html>

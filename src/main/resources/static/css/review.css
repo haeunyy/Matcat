@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+
+body {
+	margin : auto;
+	width:1440px;
+	height:1024px;
+}
+/* 탑버튼*/
+#toTop {
+  position: fixed;  
+  bottom: 100px;
+  display: none;
+  z-index: 9999;
+}
+
+/* MATCAT 기본 배경 색*/
+html {
+    background-color: #FBF9F1;
+    text-align: center;
+	width:100%;
+	margin:auto;
+}
+
+
+
+
+#matcat {
+margin-top:12%;
+}
+
+#container {
+    width: 60%;
+    height: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+}
+
+#reviewregist{
+	padding:8% 0 5% 0;
+}
+
+#titlename {
+	width:395px;
+}
+ #reviewregistform table{
+	margin:auto;
+}
+
+#image-area img {
+	width:400px; 
+	height:200px;
+}
+
+#reviewoption button{
+    width: 100px;
+    height: 30px;
+    color: #ffffff;
+    background-color: #2B7C1E;
+    cursor: pointer;
+    margin-left: 20px;
+    margin-top: 1%;
+    margin-bottom:2%;
+    border: solid 0px;
+    border-radius: 10px;
+    font-size: 1rem;
+    box-shadow: 3px 3px 1px 0 rgba(0,0,0,0.25);
+}
+
+#reviewoption button:hover {
+	background-color: #5aa94e;
+}
+
+#reviewoption button:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/payment.js" type="text/javascript"></script>
+<!-- 제이쿼리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" type="text/javascript"></script>
+<!-- 아임포트 -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+<body>
+<div th:replace="common/header.html"></div>
+<div id="body-content" >
+	<h1 class="tableheader">주문서<hr></h1>
+	<table id="order-list">
+		<tbody>
+		<tr th:each="product : ${ list }">
+			<!-- <th:block th:each="file : ${product.file}">
+				   <td><img th:src="${file.thumbPath}"/></td>
+			</th:block> -->
+			<td><img th:src="${product.filesList[0].thumbPath}"/></td>
+			<td class="prdName" th:text="${product.name}"></td>
+			<td th:text="|${count} 개|"></td>
+			<td th:text="${#numbers.formatInteger(product.price,3,'COMMA')}+'원'"></td>
+			<td th:text="${#numbers.formatInteger(product.price*count,3,'COMMA')}+'원'"></td>
+			<input id="productCode" th:value="${product.code}" type="hidden"/>
+		</tr>
+		</tbody>
+	</table>
+	<table id="total">
+		<tr>
+			<td>TOTAL</td>
+			<td th:text="${#numbers.formatInteger(list[0].price * count,3,'COMMA')}+ '원'"></td>
+		</tr>
+	</table>
+	<section>
+		<div id="">
+			<h1 class="tableheader">주문자 정보<hr></h1>
+			<table id="infomation-form">
+				<tr>
+				</tr>
+				<tr>
+					<br/>
+					<td>주문자</td>
+					<td><span id="oname" th:text="${ #authentication.principal.memberName }" ></span>
+				</tr>
+				<tr>
+					
+					<td>핸드폰</td>
+					<td><span id="ophone" th:text="${ #authentication.principal.memberPhone }"></span>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td><span id="oemail" th:text="${ #authentication.principal.memberEmail }"></span>
+				</tr>
+			</table>
+			<h1 class="tableheader">배송 정보<hr></h1>
+			<div>
+				<table id="infomation-form">
+					<tr>
+						<br/>
+						<td>우편번호</td>
+						<td><span id="address1" th:text="${ #lists.size(memberAddress) > 0 ? memberAddress[0] : '' }" ></span>
+					</tr>
+					<tr>
+						<td>주소</td>
+						<td><span id="address2"th:text="${ #lists.size(memberAddress) > 0 ? memberAddress[1] : '' }" ></span>
+					</tr>
+					<tr>
+						<td>상세주소</td>
+						<td><span id="address3" th:text="${ #lists.size(memberAddress) > 0 ? memberAddress[2] : '' }"></span>
+					</tr>
+				</table>
+			
+			</div>
+			<h1 class="tableheader">결제 정보<hr></h1>
+			<table class="payinfo">
+				<tr>
+					<td class="payhead">상품 금액</td>
+					<td th:text="${#numbers.formatInteger(list[0].price * count,3,'COMMA')}+ '원'" id="payment-click"></td>
+				</tr>
+				<tr>
+					<td class="payhead">상품 할인 금액</td>
+					<td>0원</td>
+				</tr>
+				<tr>
+					<td class="payhead">배송비</td>
+					<td>0원</td>
+				</tr>
+				<tr id="total-pay">
+					<td class="payhead">최종 결제 금액</td>
+					<td th:text="${#numbers.formatInteger(list[0].price * count,3,'COMMA')}+ '원'"></td>
+				</tr>
+			</table>
+			<div>
+				<ul class="liblank">
+					<li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>
+				</ul>
+				<hr>
+				<div class="paymethod">
+					<span>결제수단 선택 </span>
+					<input type="radio" name="paymethods" id="paymethod1" value="paymethod1" required>
+					<label for="paymethod1"><img src="/image/kakao.png" alt="kakao"></label>
+					<input type="radio" name="paymethods" id="paymethod2" value="paymethod2" required>
+					<label for="paymethod2"><img src="/image/카드결제 (1).png" alt="credit"></label>
+				</div>
+				<br><span class="p-font-small">※ 결제하신 수단으로만 환불되는 점 유의하여 주시기 바랍니다. </span>
+				
+				<p class="tableheader">개인정보 수집/제공<hr></p>
+				<div class="agree">
+					<input type="checkbox" name="agree_privacy_policy" id="policy1" required>
+					<label for="policy1"> 개인정보 수집·이용 및 처리 동의 </label>
+					<div id="my_modal">
+						<img alt="" src="/image/개인정보.png">
+						<a class="modal_close_btn">닫기</a>
+					</div>
+					<button id="popup_open_btn" onclick="modalcomeon()">(<span>보기</span>)</button><br>
+					<input type="checkbox" name="agree_privacy_policy" id="policy2" required>
+					<label for="policy2"> 전자지급 결제대행 서비스 이용약관 동의</label>
+					<a href="http://localhost:8001/order/policy2" target="_blank">(<span>보기</span>)</a><br>
+					<p> 위 내용을 확인하였으며 결제에 동의합니다.  </p>
+					<button onclick="pay()" th:text="${#numbers.formatInteger(list[0].price * count,3,'COMMA')}+ '원 결제하기'" class="btn-pay"></button>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<div th:replace="common/footer.html"></div>
+<script type="text/javascript">
+	
+	const prdName = document.getElementsByClassName("prdName");
+	const totalPay = document.getElementById("payment-click").innerHTML;
+	const $email = document.getElementById("oemail").innerText;
+	const $name = document.getElementById("oname").innerText;
+	const $ophone = document.getElementById("ophone").innerText;
+	const $address = document.getElementById("address2").innerText;
+	const $address1 = document.getElementById("address1").innerText;
+
+</script>
+</body>
+</html>

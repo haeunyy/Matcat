@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/order.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orderCompletion.css">
+</head>
+
+<body>
+  <div th:replace="common/header.html"></div>
+    <div>
+        <h1 class="tableheader">주문 완료<hr></h1>
+		<table id="order-list">
+			<tbody>
+				<tr th:each="ord : ${orderList}">
+					<td>이미지</td>
+					<td th:text="${ord.ordCode}"></td>
+				</tr>
+			</tbody>
+		</table>
+    </div>
+    <div id="infomation-form" class="wrapper">
+        <table id="table-left" class="wrap-left">
+       		<tr>
+                <td>주문 정보</td>
+            </tr>
+      		<tr>
+                <td>주문 번호</td>
+                <td th:text="${orderList.ordCode}" class="table-rightSort" id="orderCode"></td>
+            </tr>
+            <tr>
+                <td>수령자</td>
+                <td id="memberName" th:text="${ #authentication.principal.memberName }" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>핸드폰</td>
+                <td id="memberPhone" th:text="${ #authentication.principal.memberPhone }" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td  id="memberEmail" th:text="${ #authentication.principal.memberEmail }" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>배송지 주소</td>
+                <td  id="memberAddress" th:text="${ #authentication.principal.memberAddress }" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>결제 수단</td>
+                <td class="table-rightSort">카카오페이</td>
+            </tr>
+        </table>
+        <table id="table-right" class="wrap-right">
+        	<tr>
+                <td>결제 정보</td>
+            </tr>
+            <tr>
+                <td>상품 합계</td>
+                <td th:text="${orderList.ordTotalPrice}" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>할인금액</td>
+                <td class="table-rightSort">0원</td>
+            </tr>
+            <tr>
+                <td>배송비</td>
+                <td th:text="${orderList.deliveryPrice}" class="table-rightSort">3000원</td>
+            </tr>
+            <tr>
+                <td>총 합계</td>
+                <td th:text="${orderList.ordPrice}" class="table-rightSort">85,000원</td>
+            </tr>
+        </table>
+    </div>
+        <div class="btn-flex">
+            <form action="/order" method="get">
+                <button><img src="/image/btn-order-search.png" alt="주문조회"></button>
+                <button><img src="/image/이전으로.png" alt="이전으로"></button>
+            </form>
+        </div>
+    
+    <div th:replace="common/footer.html"></div>
+</body>
+</html>

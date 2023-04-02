@@ -1,0 +1,125 @@
+html {
+    background-color: #FBF9F1;
+}
+
+body {
+	margin:auto;
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+}
+
+
+/* 회원가입 컨테이너*/
+.login-container {
+    width: 63%;
+    height: 68%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+}
+/*맨위에 회원가입*/
+.main-text {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    
+}
+/* 약관동의 정보입력 가입완료  (단계)*/
+.sub-text {
+	width:75%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 20px;
+    margin:auto;
+    margin-top:-4%;
+}
+/* 필수 항목 전체 동의 */
+.kingCheck {
+    margin-left: 4%;
+    font-size: 1rem;
+    
+}
+/* 굵은 선*/
+.line {
+	border: solid 1px black;
+	margin:auto;
+	width:90%;
+	margin-bottom:2%;
+	margin-top:1%;
+}
+
+.check {
+    margin-left: 2%;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+
+.first {
+    border: solid black 1px;
+    overflow: scroll;
+    display: flex;
+    width: 88%;
+    height: 85px;
+    margin: 10px 0px 20px 50px;
+}
+
+/* 스팸정책 */
+#check {
+	 margin-left: 2%;
+}
+
+
+.two-button {
+    display: flex;
+    justify-content:space-evenly;
+    
+}
+
+.button_1{
+    background-color: #FFFDFD;
+    width: 299px;
+    height: 37px;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 20px;
+    box-shadow: 3px 3px 1px 0 rgba(0,0,0,0.25);
+}
+.button_1:hover {
+	background-color: #9ea7a1;
+}
+
+.button_1:active {
+	color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+
+
+
+.button_2{
+    background-color: #72c565;
+    width: 299px;
+    height: 37px;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 20px;
+    box-shadow: 3px 3px 1px 0 rgba(0,0,0,0.25);
+}
+
+#next:hover {
+	background-color: #5aa94e;
+}
+
+#next:active {
+	color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+
+

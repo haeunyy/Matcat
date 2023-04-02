@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<title>Mypage</title>
+	<link href="/css/viewMember.css" rel="stylesheet">
+</head>
+<div th:replace="/common/AdminHeader.html"></div>
+<div th:replace="/common/AdminLeftSidebar.html"/>
+<div th:replace="/common/RightSidebar.html"/>
+<style>
+	#submenu-fixed {
+		left: 84%;
+	}
+	#viewUpdatepage {
+		opacity: 0.3;
+	}
+</style>
+<body>
+<div id="container">
+	<form action="/admin/viewMember" id="searchForm" class="searchForm" method="get">
+		<select id="searchCondition" name="searchCondition">
+			<option th:selected="${ paging.searchCondition eq 'memberNo'}" value="memberNo">회원번호</option>
+			<option th:selected="${ paging.searchCondition eq 'memberName'}" value="memberName">이름</option>
+			<option th:selected="${ paging.searchCondition eq 'memberId'}" value="memberId">아이디</option>
+			<option th:selected="${ paging.searchCondition eq 'memberPhone'}" value="memberPhone">휴대폰</option>
+			<option th:selected="${ paging.searchCondition eq 'memberLeaveYN'}" value="memberLeaveYN">탈퇴여부 ( Y / N )</option>
+		</select>
+		<input id="searchValue" name="searchValue" class="searchText" th:value="${ paging.searchValue }" placeholder="Search" type="search">
+		<button type="submit">검색하기</button>
+	</form>
+	<div id="whiteContainer">
+		<table id="list">
+			<tr id="listName">
+				<th>회원 번호</th>
+				<th>이름</th>
+				<th>아이디</th>
+				<th>주소</th>
+				<th>이메일</th>
+				<th>휴대폰</th>
+				<th>탈퇴 여부</th>
+			</tr>
+			<tr id="listName"
+			    th:each="member : ${ memberList }" th:onclick="|location.href='/admin/memberDetail?no=${ member.memberNo }'|">
+				<th th:text="${ member.memberNo }"></th>
+				<th th:text="${ member.memberName }"></th>
+				<th style=" max-width: 95px" th:text="${ member.memberId }"></th>
+				<th:block th:if="${ member.memberAddress != null }">
+					<th style="max-width: 300px" th:text="${ member.memberAddress }"></th>
+					<th style="max-width: 185px" th:text="${ member.memberEmail }"></th>
+					<th style="max-width: 115px" th:text="${ member.memberPhone }"></th>
+					<th th:text="${ member.memberLeaveYN }"></th>
+				</th:block>
+				<th:block th:if="${ member.memberAddress == null }">
+					<th></th>
+					<th></th>
+					<th></th>
+					<th th:text="${ member.memberLeaveYN }"></th>
+				</th:block>
+			</tr>
+		</table>
+	</div>
+	<div align="center" id="paging" style="margin-top: 20px;">
+		<th:block
+				th:if="${ paging.searchCondition != null and paging.searchValue != null }">
+			<!-- << -->
+			<button
+					th:disabled="${ paging.page <= 1 }"
+					th:onclick="'location.href=\'/admin/viewMember?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+					>
+				&lt;&lt;
+			</button>
+			<!-- < -->
+			<button
+					th:disabled="${ paging.page <= 1 }"
+					th:onclick="'location.href=\'/admin/viewMember?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+					>&lt;
+			</button>
+			<!-- 숫자버튼 클릭못하게 하기 -->
+			<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+				<button
+						th:disabled="${ paging.page eq page }"
+						th:onclick="'location.href=\'/admin/viewMember?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''" th:text="${ page }"
+						>
+				</button>
+			</th:block>
+			<!-- > -->
+			<button
+					th:disabled="${ paging.page >= paging.maxPage }"
+					th:onclick="'location.href=\'/admin/viewMember?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+					>>
+			</button>
+			<!-- >> -->
+			<button
+					th:disabled="${ paging.page >= paging.maxPage }"
+					th:onclick="'location.href=\'/admin/viewMember?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+					>
+				>>
+			</button>
+		</th:block>
+		<!-- 검색 안했을때 설정 -->
+		<th:block
+				th:if="${ paging.searchCondition == null && paging.searchValue == null}">
+			<button
+					th:disabled="${ paging.page <= 1 }"
+					th:onclick="'location.href=\'/admin/viewMember?page=1\''"
+					>&lt;&lt;</button>
+			<button
+					th:disabled="${ paging.page <= 1 }"
+					th:onclick="'location.href=\'/admin/viewMember?page=' + @{${paging.page - 1}} + '\''"
+					>&lt;
+			</button>
+			<th:block
+					th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+				<button
+						th:disabled="${ paging.page eq page }"
+						th:onclick="'location.href=\'/admin/viewMember?page=' + @{${page}} + '\''" th:text="${ page }"
+						>
+				</button>
+			</th:block>
+			<button
+					th:disabled="${ paging.page >= paging.maxPage }"
+					th:onclick="'location.href=\'/admin/viewMember?page=' + @{${paging.page + 1}} + '\''"
+					>>
+			</button>
+			<button
+					th:disabled="${ paging.page >= paging.maxPage }"
+					th:onclick="'location.href=\'/admin/viewMember?page=' + @{${paging.maxPage}} + '\''"
+					>>>
+			</button>
+		</th:block>
+	</div>
+</div>
+</div>
+</body>
+</html>

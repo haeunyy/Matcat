@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+	<!-- <link rel="stylesheet" href="/css/style-004.css"> -->
+	<link rel="stylesheet" href="/css/myOrdList.css">
+	
+	<!-- <script>
+		const message = '[[${message}]]';
+		message && alert(message);
+	</script> -->
+</head>
+<body>
+<div th:replace="common/header.html"></div>
+<div id="sidebar">
+	<div th:replace="common/sidebar.html"></div>
+</div>
+<div id="content">
+	<div id="content-fit">
+		<div id="table-fit">
+			<table id="listArea">
+				<tr>
+					<th id="list2">주문 번호</th>
+					<th id="list1">상품 정보</th>
+					<th id="list3">주문 일자</th>
+					<th id="list4">주문 금액</th>
+					<th id="list5">진행 상태</th>
+				</tr> <!-- 체크박스는 빼고 td 개별로 onclick 주기 -->
+				<tr th:each="order : ${orderList}"
+				    th:onclick="|location.href='/order/ordDetail?ordCode=${order.ordCode}'|">
+					<th:block th:if="${order.ordCode} != 0 ">
+						<td th:text="${order.ordCode}"></td>
+						<th:block th:each="ord : ${order.ordDetails}" th:if="${order.ordTotalCount > 1}">
+							<td th:if="${ordStat.first}" th:text="|${ord.products.name} 외 ${order.ordTotalCount -1} 건|"></td>
+						</th:block>
+						<th:block th:each="ord : ${order.ordDetails}" th:if="${order.ordTotalCount < 2}">
+							<td th:text="|${ord.products.name}|"></td>
+						</th:block>
+						<td th:text="${order.ordDate}"></td>
+						<td th:text="${order.ordPrice}"></td>
+						<td th:text="${order.status.statusName}"></td>
+					</th:block>
+					<th:block th:if="${order.ordCode} == 0">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</th:block>
+				</tr>
+			</table>
+			<div align="center" id="paging" style="margin-top: 20px;">
+					<th:block
+							th:if="${ paging.searchCondition != null and paging.searchValue != null }">
+						<button
+								th:disabled="${ paging.page <= 1 }"
+								th:onclick="'location.href=\'/order/myOrdList?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">
+								&lt;&lt;</button>
+						<button
+								th:disabled="${ paging.page <= 1 }"
+								th:onclick="'location.href=\'/order/myOrdList?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">
+								&lt;</button>
+						<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+							<button
+									th:disabled="${ paging.page eq page }"
+									th:onclick="'location.href=\'/order/myOrdList?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''" th:text="${ page }">
+							</button>
+						</th:block>
+						<button
+								th:disabled="${ paging.page >= paging.maxPage }"
+								th:onclick="'location.href=\'/order/myOrdList?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">
+								&gt;</button>
+						<button
+								th:disabled="${ paging.page >= paging.maxPage }"
+								th:onclick="'location.href=\'/order/myOrdList?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">
+								&gt;&gt;</button>
+					</th:block>
+					<!-- 검색 안했을때 설정 -->
+					<th:block
+							th:if="${ paging.searchCondition == null && paging.searchValue == null}">
+						<button
+								th:disabled="${ paging.page <= 1 }"
+								th:onclick="'location.href=\'/order/myOrdList?page=1\''">
+								&lt;&lt;</button>
+						<button
+								th:disabled="${ paging.page <= 1 }"
+								th:onclick="'location.href=\'/order/myOrdList?page=' + @{${paging.page - 1}} + '\''">
+								&lt;</button>
+						<th:block
+								th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+							<button
+									th:disabled="${ paging.page eq page }"
+									th:onclick="'location.href=\'/order/myOrdList?page=' + @{${page}} + '\''" th:text="${ page }">
+							</button>
+						</th:block>
+						<button
+								th:disabled="${ paging.page >= paging.maxPage }"
+								th:onclick="'location.href=\'/order/myOrdList?page=' + @{${paging.page + 1}} + '\''">
+								&gt;</button>
+						<button
+								th:disabled="${ paging.page >= paging.maxPage }"
+								th:onclick="'location.href=\'/order/myOrdList?page=' + @{${paging.maxPage}} + '\''">
+								&gt;&gt;</button>
+					</th:block>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

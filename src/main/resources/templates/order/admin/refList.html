@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="/resource/static/js/order.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style-004.css">
+<!-- <script>
+    const message = '[[${message}]]';
+    message && alert(message);
+</script> -->
+</head>
+<body>
+    <div th:replace="common/AdminHeader.html"></div>
+    <div id="sidebar">
+		<div th:replace="common/AdminLeftSidebar.html"></div>
+	</div>
+	<div id="content">
+        <div id="content-fit">
+            <form action="/search" method="get" id="searchForm">
+                <select name="refListDrop" id="orderList-drop">
+                    <option value="memberName">반품자명</option>
+                    <option value="memberCode">회원코드</option>
+                    <option value="refCode">반품번호</option>
+                </select>
+                <input type="text" name="search" id="searchText" placeholder="Search">
+                <span>반품상태</span>
+                <select name="orderStatusDrop" id="orderStatusDrop">
+                    <option value="all">전체</option>
+                    <option value="newOrd">신규반품</option>
+                    <option value="payCheck">반품확인중</option>
+                    <option value="delStart">반품승인</option>
+                    <option value="delComplete">반품완료</option>
+                </select>
+                <button type="submit">조회</button>
+            </form>
+            <div id="table-fit">
+                <table id="listArea">
+                    <tr>
+                        <th id="list1"></th>
+                        <th id="list2">반품번호</th>
+                        <th id="list3">회원번호</th>
+                        <th id="list4">등록일자</th>
+                        <th id="list5">반품상태</th>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="changeBox"></td>
+                        <td>AA0000000</td>
+                        <td>회원번호</td>
+                        <td>등록일자</td>
+                        <td>반품상태</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="statusChange">
+                <span>반품상태</span>
+                <select name="orderStatusDrop" id="orderStatusDrop">
+                    <option value="all">전체</option>
+                    <option value="newOrd">신규반품</option>
+                    <option value="payCheck">반품확인중</option>
+                    <option value="delStart">반품승인</option>
+                    <option value="delComplete">반품완료</option>
+                </select>
+                <button type="submit">변경</button>
+            </div>
+            <div id="paging-content">
+                <div id="paging">
+                    <button type="button">&lt;&lt;</button>
+                    <button type="button">&lt;</button>
+                    <button type="button">num</button>
+                    <button type="button">&gt;</button>
+                    <button type="button">&gt;&gt;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<div th:replace="common/footer.html"></div>
+</body>
+</html>

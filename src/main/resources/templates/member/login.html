@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<title>login</title>
+	<link href="/css/login.css" rel="stylesheet">
+	<script src="/js/login.js" type="text/javascript"></script>
+	
+	<script>
+		const message = '[[${message}]]';
+		message && alert(message);
+		const exception = '[[${exception}]]';
+		if (exception) {
+			alert(exception)
+			location.href = '/member/login';
+		}
+	</script>
+
+</head>
+<div th:replace="/member/header.html"></div>
+<body class="container">
+<div class="login-container">
+
+  <h1 id=loginname align="center">Login</h1>
+  
+	<form action="/member/login" id="loginForm" method="post">
+		<table id="text-box">
+			<tr>
+				<th class="insertid">
+					<label class="text">ID</label>
+				</th>
+				<td>
+					<input class="IDinsert" name="memberId" required type="text">
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label class="text">비밀번호</label>
+				</th>
+				<td>
+					<input class="PWDinsert" name="memberPwd" required type="password">
+				</td>
+			</tr>
+			
+			<input id="loginSubmit" type="submit" value="로그인">
+			<div align="center" class="btns">
+				<button id="regist" onclick="location.href='/member/regist1'" type="button">회원가입</button>
+				<button onclick="location.href='/member/findId'" type="button">아이디 찾기</button>
+				<button onclick="location.href='/member/findPWD'" type="button">비밀번호 찾기</button>
+			</div>
+		</table>
+	</form>
+	<div align="center" class="btns" id="social" style="margin-top: 20px">
+		<a><img src="/image/btnB_google.png" onclick="location.href='/oauth2/authorization/google'" type="button"></a>
+		<a><img src="/image/btnG_naver.png" onclick="location.href='/oauth2/authorization/naver'" type="button"></a>
+		<a><img src="/image/btnY_kakao.png" onclick="location.href='/oauth2/authorization/kakao'" type="button"></a>
+	</div>
+</div>
+</body>
+</html>

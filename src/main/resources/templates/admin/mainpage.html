@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<title>mainpage</title>
+	<link href="/css/Mainpage.css" rel="stylesheet">
+</head>
+<div th:replace="/common/AdminHeader.html"></div>
+<body>
+<div th:replace="/common/AdminLeftSidebar.html"/>
+<div th:replace="/common/RightSidebar.html"/>
+<div class="container">
+	<div class="newBoard1">
+		<h1 align="center" style="position: absolute">매진 임박 상품</h1>
+		<table class="table1" style="margin-top: 60px">
+			<tr>
+				<th>상품 번호</th>
+				<th>상품 이름</th>
+				<th>재고 현황</th>
+				<th>상태</th>
+			</tr>
+			<tr class="product" th:each="product : ${ productList }"
+			    th:data-product-code="${product.code}">
+				<th th:text="${ product.code }"></th>
+				<th th:text="${ product.name }"></th>
+				<th th:text="${ product.quan }"></th>
+				<th th:text="${ product.status }"></th>
+			</tr>
+		</table>
+	</div>
+	<script>
+		document.querySelectorAll(".product").forEach(tr => tr.addEventListener('click', (e)=>{
+			const $productCode = e.currentTarget.dataset.productCode;
+			location.href="/menusemi?no="+$productCode;}))
+	</script>
+	<div class="newBoard2">
+		<h1 align="center" style="position: absolute">신규 주문</h1>
+		<table class="table1">
+			<tr>
+				<th>주문 코드</th>
+				<th>가격</th>
+				<th>구매자</th>
+				<th>구매 시간</th>
+			</tr>
+			<tr class="newPost" th:each="order : ${ orderList }"
+			    th:onclick="|location.href='/order/admin/ordDetail?no=${order.ordCode}'|">
+				<th th:text="${order.ordCode}"></th>
+				<th th:text="${#numbers.formatInteger(order.ordPrice, 3, 'COMMA') + '원'}"></th>
+				<th th:text="${ order.member.memberName }"></th>
+				<th th:text="${ order.ordDate }"></th>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="container">
+<div class="newBoard3">
+	<h1 align="center" style="position: absolute">신규 1:1 문의</h1>
+	<table class="table1">
+		<tr>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성 시간</th>
+		</tr>
+		<tr class="newPost" th:each="board : ${ boardList }"
+		    th:onclick="|location.href='/board/boardDetail?postCode=${board.postCode}'|">
+			<th th:text="${ board.postTitle }" style="max-width: 120px;"></th>
+			<th th:text="${ board.writer.memberName }"></th>
+			<th th:text="${ board.reportDate }"></th>
+		</tr>
+	</table>
+</div>
+<div class="newBoard3" style="margin-left: 135px">
+	<h1 align="center" style="position: absolute">3월 매출 통계</h1>
+	<table class="table2">
+		<tr>
+			<th>주문 건 수</th>
+			<th>매출</th>
+		</tr>
+		<tr>
+			<th th:text="${ total.count }" style="font-size: 25px"></th>
+			<th th:text="${#numbers.formatInteger(total.sum, 3, 'COMMA') + '원'}" style="font-size: 25px"></th>
+		</tr>
+	</table>
+</div>
+</div>
+
+</body>
+</html>

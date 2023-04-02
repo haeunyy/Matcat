@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>menutest</title>
+</head>
+<body>
+		<h1>전체 상품 조회 페이지</h1>
+		
+		<div th:each="product : ${ productList }">
+			<a th:text="${ product.code }"></a>
+			<a th:text="${ product.name }"></a>
+			<a th:text="${ product.price }"></a>
+			<a th:text="${ product.quan }"></a>
+			<a th:text="${ product.categoryCode }"></a>
+			<a th:text="${ product.status }"></a>
+			<a th:text="${ product.registDate }"></a>
+			<a th:text="${ product.modiDate }"></a>
+		
+		</div>
+		
+</body>
+</html>

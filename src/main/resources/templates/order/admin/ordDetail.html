@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style-002.css">
+    <!-- <script>
+        const message = '[[${message}]]';
+	    message && alert(message);
+    </script> -->
+</head>
+
+<body>
+    <div th:replace="common/AdminHeader.html"></div>
+    <div th:replace="common/AdminLeftSidebar.html"></div>
+    <div id="whatisthis">
+    	<div>
+        <h1 class="tableheader">주문 상세 내역<hr style="width:900px"/></h1>
+        <table id="order-list"> 
+        	<tr>
+       			<th colspan="3">상품 정보</th>
+       			<th>수량</th>
+       			<th>상품별 금액</th>
+        	</tr>
+            <tr th:each="list: ${detail.ordDetails}"><!-- 이미지 끌어오기 상품-->
+<!--                <th:block th:each="files : ${ productList.filesList }">-->
+<!--                   <img th:if="${ files.thumbYN == 'Y' }" th:src="${ files.thumbPath }">-->
+<!--	            </th:block>-->
+                <td colspan="2">
+					<span th:text="${list.products.name}"></span><br/>
+					<span th:text="|상품번호 : ${list.products.code}|"></span>
+				</td>
+                <td th:text="|${list.ordCount} 개|"></td>
+	            <td th:text="|${list.products.price} 원|"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="infomation-form" class="wrapper">
+        <table th:each="list: ${customList}"id="table-left" class="wrap-left" > 
+        	 <tr>
+                <td>회원 ID</td>
+                <td id="memberId" th:text="${ list.member.memberId }" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>수령자</td>
+                <td id="memberName" th:text="${ list.member.memberName }" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>핸드폰</td>
+                <td id="memberPhone" th:text="${ list.member.memberPhone }" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td  id="memberEmail" th:text="${ list.member.memberEmail }" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>배송지 주소</td>
+                <td  id="memberAddress" th:text="${ list.member.memberAddress }" class="table-rightSort"></td>
+            </tr>
+        </table>
+        <table class="wrap-right" id="table-right" th:object="${detail.ordDetails}">
+            <tr>
+                <td>상품별 금액</td>
+                <td id="ordPrice" th:text="|${ detail.ordPrice } 원|" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>할인 금액</td>
+                <td class="table-rightSort">0원</td>
+            </tr>
+            <tr>
+                <td>배송비</td>
+                <td id="delPrice" th:text="|${ detail.deliveryPrice } 원|" class="table-rightSort"></td>
+            </tr>
+            <tr id="total-price">
+                <td>합계</td>
+                <td id="totalPrice" th:text="${ detail.ordPrice }+${ detail.deliveryPrice }+' 원'" class="table-rightSort"></td>
+            </tr>
+            <tr>
+                <td>결제 수단</td>
+                <td class="table-rightSort">카카오페이</td>
+            </tr>
+        </table>
+    </div>
+        <div class="btn-flex">
+            <button><img th:onclick="|location.href='@{/order/admin/ordList}'|" src="/image/이전으로.png" alt="이전으로"></button>
+        </div>
+    </div>
+</body>
+<footer>
+    <div th:replace="common/footer.html"></div>
+</footer>	
+</html>

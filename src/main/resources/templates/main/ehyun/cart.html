@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>장바구니 페이지!</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="Free HTML Templates" name="keywords">
+	<meta content="Free HTML Templates" name="description">
+	
+	<!-- Favicon -->
+	<link href="/image/EH_favicon.ico" rel="icon">
+	
+	
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com" rel="preconnect">
+	<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+	
+	<!-- Font Awesome -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	
+	
+	<!-- Libraries Stylesheet -->
+	<link href="/lib/owlcarousel/EH_owl.carousel.min.js" rel="stylesheet">
+	
+	<!-- css 링크 -->
+	<!-- Bootstrap Stylesheet -->
+	<link href="/css/EH_css_shoppingcart.css" rel="stylesheet">
+
+</head>
+<!-- 상단바 -->
+<div th:replace="/common/header.html"></div>
+
+<body>
+	<!-- 알림창 -->
+	<script>
+		const message = '[[${message}]]';
+		message && alert(message);
+	</script>
+	
+	<!--페이지 내용 시작-->
+	<div id="content">
+		<!-- 장바구니 박스 시작 -->
+		<div id="cartbox"><p>장바구니</p></div>
+		<!-- 장바구니 박스 끝-->
+	
+	<!-- 테스트 끝 -->	
+			<form action="/order/insert" method="post">
+				<div class="container-fluid pt-5">
+					<div class="row px-xl-5">
+						<div class="col-lg-8 table-responsive mb-5">
+							<!-- 카트 테이블 시작 -->
+							<table class="table table-bordered text-center mb-0">
+								<thead class="bg-secondary text-dark">
+
+<!--페이지 내용 시작-->
+<div id="content" align="center">
+	<!-- 장바구니 박스 시작 -->
+	<div id="cartbox"><p>장바구니</p></div>
+	<!-- 장바구니 박스 끝-->
+
+<!-- 테스트 끝 -->	
+		<form action="/order/insert" method="post">
+			<div class="container-fluid pt-5">
+				<div class="row px-xl-5">
+					<div class="col-lg-8 table-responsive mb-5">
+						<!-- 카트 테이블 시작 -->
+						<table class="table table-bordered text-center mb-0">
+							<thead class="bg-secondary text-dark">
+							<tr>
+								<th colspan="2">상품명</th>
+								<th>원</th>
+								<th>수량</th>
+								<th>삭제</th>
+							</tr>
+							</thead>
+								<tbody class="align-middle">
+								<tr>
+									<th colspan="2">상품명</th>
+									<th>원</th>
+									<th>수량</th>
+									<th>삭제</th>
+									<td class="align-middle">
+											<img alt="상품대표사진" src="/image/EH_budae.jpg"
+										                              style="width: 65px; height: 50px;">
+		                             	</td>
+									<td class="align-middle">비지찌개</td>
+									<td class="align-middle">10,000</td>
+									<td class="align-middle">
+										<div class="input-group quantity mx-auto">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-minus">
+													<i class="fa fa-minus"></i>
+												</button>
+											</div>
+											<input class="form-control form-control-sm bg-secondary text-center"
+											       type="text" value="1" min="1">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-plus">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td class="align-middle"><!-- 삭제 아이콘 -->
+										<button type="button" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+									</td>
+								</tr>
+								<tr>
+									<td class="align-middle">
+											<img alt="상품대표사진" src="/image/EH_budae.jpg"
+										                              style="width: 65px; height: 50px;">
+		                             	</td>
+									<td class="align-middle">부대찌개</td>
+									<td class="align-middle">18,000원</td>
+									<td class="align-middle">
+										<div class="input-group quantity mx-auto">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-minus">
+													<i class="fa fa-minus"></i>
+												</button>
+											</div>
+											<input class="form-control form-control-sm bg-secondary text-center"
+											       type="text" value="1" min="1">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-plus">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td class="align-middle"><!-- 삭제 아이콘 -->
+										<button type="button" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+									</td>
+								</tr>
+								<tr>
+									<td class="align-middle">
+											<img alt="상품대표사진" src="/image/EH_budae.jpg"
+										                              style="width: 65px; height: 50px;">
+		                             	</td>
+									<td class="align-middle">김치찌개</td>
+									<td class="align-middle">12,000원</td>
+									<td class="align-middle">
+										<div class="input-group quantity mx-auto">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-minus">
+													<i class="fa fa-minus"></i>
+												</button>
+											</div>
+											<input class="form-control form-control-sm bg-secondary text-center"
+											       type="text" value="1" min="1">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-plus">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td class="align-middle"><!-- 삭제 아이콘 -->
+										<button type="button" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+									</td>
+								</tr>
+								<tr>
+									<td class="align-middle">
+											<img alt="상품대표사진" src="/image/EH_budae.jpg"
+										                              style="width: 65px; height: 50px;">
+		                             	</td>
+									<td class="align-middle">된장찌개</td>
+									<td class="align-middle">10,000원</td>
+									<td class="align-middle">
+										<div class="input-group quantity mx-auto">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-minus">
+													<i class="fa fa-minus"></i>
+												</button>
+											</div>
+											<input class="form-control form-control-sm bg-secondary text-center"
+											       type="text" value="1" min="1">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-plus">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td class="align-middle"><!-- 삭제 아이콘 -->
+										<button type="button" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+									</td>
+								</tr>
+								</thead>
+									<tbody class="align-middle">
+									<tr>
+										<td class="align-middle">
+												<img alt="상품대표사진" src="/image/EH_bodae.jpg"
+											                              style="width: 65px; height: 50px;">
+			                             	</td>
+										<td class="align-middle">부찌</td>
+										<td class="align-middle">18000</td>
+										<td class="align-middle">
+											<div class="input-group quantity mx-auto">
+												<div class="input-group-btn">
+													<button class="btn btn-sm btn-primary btn-minus">
+														<i class="fa fa-minus"></i>
+													</button>
+												</div>
+												<input class="form-control form-control-sm bg-secondary text-center"
+												       type="text" value="1" min="1">
+												<div class="input-group-btn">
+													<button class="btn btn-sm btn-primary btn-plus">
+														<i class="fa fa-plus"></i>
+													</button>
+												</div>
+											</div>
+										</td>
+										<td class="align-middle"><!-- 삭제 아이콘 -->
+											<button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>		
+				<div class="card-header bg-secondary border-0">
+					<h4 class="font-weight-semi-bold m-0">결제금액</h4>
+				</div>
+				<div class="card-body">
+					<div class="d-flex justify-content-between mb-3 pt-1">
+						<h6 class="font-weight-medium">상품금액</h6>
+						<h6 class="font-weight-medium">10000</h6>
+							</tbody>
+						</table>
+						<div>
+							<div class="card-header bg-secondary border-0">
+								<h4 class="font-weight-semi-bold m-0">결제금액</h4>
+							</div>
+							<div class="card-body">
+								<div class="d-flex justify-content-between mb-3 pt-1">
+									<h6 class="font-weight-medium">상품금액</h6>
+									<h6 class="font-weight-medium">50,000원</h6>
+								</div>
+							</div>
+							<div class="card-footer border-secondary bg-transparent">
+								<div class="d-flex justify-content-between mt-2">
+									<h5 class="font-weight-bold">결제 예정 금액</h5>
+									<h5 class="font-weight-bold" name="totalPrice">50,000원</h5>
+								</div>
+							</div>
+							<div id="cart">
+								<input class="btn btn-block btn-primary my-3 py-3" type="submit" value="주문하기" name="cartToOrder"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer border-secondary bg-transparent">
+					<div class="d-flex justify-content-between mt-2">
+						<h5 class="font-weight-bold">결제 예정 금액</h5>
+						<h5 class="font-weight-bold" name="totalPrice">10000</h5>
+					</div>
+					<div id="cart">
+						<input class="btn btn-block btn-primary my-3 py-3" type="submit" value="주문하기" name="cartToOrder"/>
+					</div>
+				</div>
+			</form>
+	<!-- 테스트 끝 -->
+				</div>		
+			</div>
+		</form>
+<!-- 테스트 끝 -->
+	
+	
+	
+	
+	<!-- Cart Start -->
+	<form action="/order/insert" method="post">
+		<th:block th:each="cart : ${ cartList }">
+			<div class="container-fluid pt-5">
+				<div class="row px-xl-5">
+					<div class="col-lg-8 table-responsive mb-5">
+						<!-- 카트 테이블 시작 -->
+						<table class="table table-bordered text-center mb-0">
+							<thead class="bg-secondary text-dark">
+							<tr>
+								<th colspan="2"><span th:text="product : ${ name }"></span>상품명</th>
+								<th><span th:text="cart : ${ cartPrice }"></span>원</th>
+								<th>수량</th>
+								<th>삭제</th>
+							</tr>
+							</thead>
+								<tbody class="align-middle">
+								<tr th:each="cart : ${cartList}">
+									<td class="align-middle">
+										<th:block th:each>	
+											<img alt="상품대표사진" th:if="${files.thumbYN='Y'}" th:src="files : ${ thumbPath }"
+										                              style="width: 65px; height: 50px;">
+										</th:block>>
+		                             	</td>
+									<td class="align-middle" th:text="${cart.products.name}"></td>
+
+									<td class="align-middle" th:text="${cart.products.price}"></td>
+									<td class="align-middle">
+										<div class="input-group quantity mx-auto">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-minus">
+													<i class="fa fa-minus"></i>
+												</button>
+											</div>
+											<input class="form-control form-control-sm bg-secondary text-center"
+											       th:value="${cart.quantity}"
+											       type="text" min="1">
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-sm btn-primary btn-plus">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td class="align-middle"><!-- 삭제 아이콘 -->
+										<button type="button" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		<!-- 카트 테이블 끝 -->
+		
+		
+		
+		
+			
+		<!-- 	
+			<div class="col-lg-4">
+				<div class="card border-secondary mb-5">
+					<div class="card-header bg-secondary border-0">
+						<h4 class="font-weight-semi-bold m-0">배송지</h4>
+					</div>
+					<div class="card-body">
+						<h6 align="center"><b>배송지를 등록</b>하고<br>구매가능한 상품을 확인하세요!</h6>
+						<br>
+						<form action="/main/shoppingcart" method="post">
+							<div align="center" id="address-search">
+								<input id="searchZipCode" type="button" value="주소 검색">
+							</div>
+							<br>
+							<table align="center" class="input-address">
+								<tr>
+									<td>우편번호</td>
+									<td><input id="zipCode" name="zipCode" readonly type="text"></td>
+								</tr>
+								<tr>
+									<td>주소</td>
+									<td><input id="address1" name="address1" readonly type="text"></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>상세주소</td>
+									<td><input id="address2" name="address2" type="text"></td>
+									<td></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+		-->
+					<div class="card-header bg-secondary border-0">
+						<h4 class="font-weight-semi-bold m-0">결제금액</h4>
+					</div>
+					<div class="card-body">
+						<div class="d-flex justify-content-between mb-3 pt-1">
+							<h6 class="font-weight-medium">상품금액</h6>
+							<h6 class="font-weight-medium" th:text="|${cartPrice} 원|"></h6>
+						</div>
+		<!-- 			
+						<div class="d-flex justify-content-between">
+							<h6 class="font-weight-medium">배송비</h6>
+							<h6 class="font-weight-medium">3,000원</h6>
+						</div> 
+		-->
+					</div>
+					<div class="card-footer border-secondary bg-transparent">
+						<div class="d-flex justify-content-between mt-2">
+							<h5 class="font-weight-bold">결제 예정 금액</h5>
+							<h5 class="font-weight-bold" name="totalPrice" th:text="|${#arregates.sum(list.![cart.quantity])} 원|"></h5>
+						</div>
+						<div id="cart">
+							<input class="btn btn-block btn-primary my-3 py-3" type="submit" value="주문하기" name=""/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</th:block> <!-- cartList -->
+	</form>
+	<!-- Cart End -->
+
+
+<!-- Back to Top(위로 올라가기) -->
+<a class="btn btn-primary back-to-top" href="#"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/lib/EH_easing/easing.min.js"></script>
+<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+
+
+
+<!-- cart 총금액 계산...?? -->
+<script>
+
+</script>
+
+	<!-- 주소 입력 API -->
+<!-- 
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		const $searchZipCode = document.getElementById("searchZipCode");
+		
+		$searchZipCode.onclick = function () {
+			
+			/* 다음 우편번호 검색 창을 오픈하면서 동작할 콜백 메서드를 포함한 객체를 인자로 전달한다. */
+			new daum.Postcode({
+				oncomplete: function (data) {
+					/* 팝업에서 검색결과 항목을 클릭했을 시 실행할 코드를 작성하는 부분 */
+					document.getElementById("zipCode").value = data.zonecode;
+					document.getElementById("address1").value = data.address;
+					document.getElementById("address2").focus();
+					
+				}
+			}).open();
+			
+		};
+	</script>
+-->
+
+</div>
+<!--페이지 내용 끝-->
+
+<script src="/js/EH_cart.js"></script>
+
+
+</body>
+
+<!-- footer -->
+</html>

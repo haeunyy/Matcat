@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>sidebar</title>
+	<style>
+		#sidebar {
+			margin-top: 8%;
+			margin-left: 20px;
+			position: fixed;
+			background-color: #FBF9F1;
+		}
+		
+		#sidebar ul {
+			padding: 0;
+			margin: 0;
+		}
+		
+		#sidebar li {
+			padding: 10px;
+			list-style-type: none;
+			border-bottom: 1px solid #ddd;
+		}
+		
+		#sidebar li:last-child{
+			border-bottom: none;
+		}
+		
+		#sidebar-title {
+			font-size: large;
+			font-weight: 900;
+		}
+		
+		
+		#sidebar li a {
+			display: flex;
+			justify-content: center;
+			color: #333;
+			text-decoration: none;
+			font-weight: bold;
+		}
+		
+		#sidebar li a:hover {
+			background-color: #ddd;
+		}
+	</style>
+</head>
+<body>
+<div id="sidebar">
+	<ul>
+		<li><a id="viewMypage">내 정보 조회</a></li>
+		<li><a id="viewUpdatepage">내 정보 수정</a></li>
+		<li><a id="viewOrder">주문 조회</a></li>
+		<li><a href="#">배송 조회</a></li>
+		<li><a href="#">반품 조회</a></li>
+	</ul>
+</div>
+<script>
+	if (document.getElementById("viewMypage")) {
+		const viewMypage = document.getElementById("viewMypage");
+		const viewUpdatepage = document.getElementById("viewUpdatepage");
+		const viewOrder = document.getElementById("viewOrder");
+		let form = document.createElement("form");
+		viewMypage.onclick = function () {
+			viewMypage.append(form)
+			form.setAttribute("method", "get");
+			form.setAttribute("action", "/member/mypage");
+			form.submit();
+		}
+		viewUpdatepage.onclick = function () {
+			viewMypage.append(form)
+			form.setAttribute("method", "get");
+			form.setAttribute("action", "/member/BeforeUpdate");
+			form.submit();
+		}
+		viewOrder.onclick = function () {
+			viewMypage.append(form)
+			form.setAttribute("method", "get");
+			form.setAttribute("action", "/order/myOrdList");
+			form.submit();
+		}
+	}
+</script>
+</body>
+</html>

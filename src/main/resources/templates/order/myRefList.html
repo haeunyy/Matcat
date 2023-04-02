@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="/resource/static/js/order.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+<!-- <link rel="stylesheet" href="/css/style-004.css"> -->
+<link rel="stylesheet" href="/css/myOrdList.css">
+
+<!-- <script>
+    const message = '[[${message}]]';
+    message && alert(message);
+</script> -->
+</head>
+<body>
+    <div th:replace="common/header.html"></div>
+    <div id="sidebar">
+    	<div th:replace="common/AdminLeftSidebar.html"></div>
+	</div>
+	<div id="content">
+        <div id="content-fit">
+			<h1 class="tableheader">반품 내역 조회<hr></h1>
+            <div id="table-fit">
+                <table id="listArea">
+                    <tr>
+						<th id="list1">상품 정보</th>
+                        <th id="list2">반품 번호</th>
+                        <th id="list3">신청 일자</th>
+                        <th id="list5">진행 상태</th>
+                    </tr>
+                    <tr th:each="order : ${orderList}" 
+                    	th:onclick="|location.href='/order/ordDetail?no=${order.ordNo}">
+                        <td colspan="2">
+							<span th:text="|${order.product.name} 외 ${}개"></span><br/>
+							<span th:text="${order.price}"></span>
+						</td>
+                        <td th:text="${order.member.memberNo}"></td>
+                        <td th:text="${order.ordDate}"></td>
+                        <td th:text="${order.status.statusCode}"></td>
+                    </tr>
+                </table>
+				<div id="paging">
+					 <th:block
+						th:if="${ paging.searchCondition != null and paging.searchValue != null }">
+						<button 
+							th:onclick="'location.href=\'/order/ordList?page=1&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''">&lt;&lt;</button>
+						<button 
+							th:onclick="'location.href=\'/order/ordList?page=' + @{${paging.page - 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+							th:disabled="${ paging.page <= 1 }">&lt;</button>
+						<th:block
+							th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+							<button
+								th:onclick="'location.href=\'/board/list?page=' + @{${page}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${paging.searchValue}} + '\''"
+								th:text="${ page }" th:disabled="${ paging.page eq page }">
+							</button>
+						</th:block>
+						<button
+							th:onclick="'location.href=\'/board/list?page=' + @{${paging.page + 1}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''"
+							th:disabled="${ paging.page >= paging.maxPage }">&gt;</button>
+						<button 
+							th:onclick="'location.href=\'/board/list?page=' + @{${paging.maxPage}} + '&searchCondition=' + @{${paging.searchCondition}} + '&searchValue=' + @{${searchValue}} + '\''">&gt;&gt;</button>
+					</th:block>
+				</div>
+			</div>
+        </div>
+	</div>
+</body>
+</html>

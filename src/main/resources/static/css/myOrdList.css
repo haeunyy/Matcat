@@ -1,0 +1,192 @@
+@charset "UTF-8";
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* MATCAT 기본 배경 색*/
+body {
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+    margin-left: 240px;
+    margin-right: 240px;
+}
+
+span{
+    font-size: small;
+}
+
+/* 사이드 바 스타일 */
+#sidebar {
+    margin-top: 8%;
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #FBF9F1;
+}
+
+#sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar li {
+    padding: 10px;
+    list-style-type: none;
+
+    border-bottom: 1px solid #ddd;
+}
+
+#sidebar-title {
+    font-size: large;
+    font-weight: 900;
+}
+
+
+#sidebar li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#sidebar li a:hover {
+    background-color: #ddd;
+}
+
+/* 페이지 내용 스타일 */
+#content {
+    margin-left: 21%; /* 사이드 바 너비만큼 왼쪽 마진 추가 */
+    padding: 20px;
+    width: 60%;
+    height: 600px;
+    background-color: white;
+    position: relative;
+}
+
+#content-fit{
+    padding: 2%;
+}
+
+/* 검색창 */
+.searchForm{
+    margin: 4%;
+    display: flex;
+    justify-content: flex-end;
+    flex-basis: 100%;   
+}
+
+.searchText{
+    border-radius: 5px;
+    border-color: lightgray;
+    border-width: 0.1px;
+    /* margin: 0% 2%; */
+    box-shadow: none;
+}
+
+#searchForm > * {
+    border-color: lightgray;
+    margin-right: 5px;
+}
+
+#searchForm select {
+    /* width: 90px; */
+    /* margin-left: 10px; */
+    border-radius: 5px;
+}
+
+#searchForm button{
+    border-radius: 5px;
+    background-color: #6E9ADC;
+    border: none;
+    /* width: 50px;
+    margin-left: 5%; */
+    box-shadow: none;
+}
+
+/* 테이블 */
+#listArea {
+    text-align: center;
+}
+
+#listArea :first-child{
+    font-weight: 800;
+}
+
+#list1{
+    width: 300px;
+}
+
+#list2, #list3, #list5{
+    width: 200px;
+}
+
+#list4{
+    width: 180px;
+}
+
+#listArea td{
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+}
+
+#listArea th{
+    padding: 5px;
+    text-align: center;
+    border-bottom: 2px solid lightgray;
+}
+
+#listArea td{
+    font-size: small;
+}
+
+/* 하단 상태변경 */
+#statusChange{
+    margin: 30px;
+}
+
+#invoiceNum{
+    border-radius: 5px;
+    border-color: lightgray;
+    border-width: 0.1px;
+    /* margin: 0% 2%; */
+    box-shadow: none;
+}
+
+#statusChange > * {
+    border-color: lightgray;
+    margin-right: 5px;
+}
+
+#statusChange select {
+    /* width: 90px; */
+    /* margin-left: 10px; */
+    border-radius: 5px;
+}
+
+#statusChange button{
+    border-radius: 5px;
+    background-color: #CD3E00;
+    border: none;
+    /* width: 50px;
+    margin-left: 5%; */
+    box-shadow: none;
+}
+
+
+/* 페이징 버튼 */
+#paging{
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#paging-content button{
+    border: none;
+    background-color: white;
+    font-weight: 800;
+}

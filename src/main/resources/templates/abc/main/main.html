@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>UI_MAIN_001</title>
+	<link href="/css/main.css" rel="stylesheet">
+	
+	
+	<script crossorigin="anonymous"
+	        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	        src="https://code.jquery.com/jquery-3.6.3.min.js">
+	</script>
+	<script>
+		const message = '[[${message}]]';
+		message && alert(message);
+	</script>
+</head>
+<body>
+
+
+<div th:replace="/common/header.html"></div>
+
+<!-- 탑버튼 -->
+<a href="#" id="toTop"><img src="/image/화살표 좌.png"></a>
+
+
+<div id="body-mainpicture">
+	<a id="mainjpg"><img src="/image/메인페이지사진.jpg"></a>
+
+</div>
+
+<div th:replace="/common/RightSidebar.html"></div>
+
+<div class="body-newmenu">
+	<a>새로나온 상품!!</a>
+	
+	<div class="picture">
+		
+		<form class="productform" method="get">
+			<table class="product_set" th:each="product : ${ newProduct }">
+				<tr>
+					<th:block th:each="file : ${product.filesList}">
+						<td>
+							<a th:href="@{/menusemi(no=${product.code})}"><img class="pic" th:src="${file.thumbPath}"></a>
+						</td>
+					</th:block>
+				</tr>
+				<tr>
+					<td th:text="${ product.name }"></td>
+				</tr>
+				<tr>
+					<td th:text="${#numbers.formatInteger(product.price,3,'COMMA')+' 원'}"></td>
+				</tr>
+			</table>
+		</form>
+	
+	
+	</div>
+</div>
+
+<div class="body-manysellmenu">
+	<a>가장많이 팔린상품</a>
+	
+	<div class="manysellmenu-picture">
+		<form class="productform" method="get">
+			<table class="product_set" th:each="product : ${ goodProduct }">
+				<tr>
+					<th:block th:each="file : ${product.filesList}">
+						<td>
+							<a th:href="@{/menusemi(no=${product.code})}"><img class="pic" th:src="${file.thumbPath}"></a>
+						</td>
+					</th:block>
+				</tr>
+				<tr>
+					<td th:text="${ product.name }"></td>
+				</tr>
+				<tr>
+					<td th:text="${#numbers.formatInteger(product.price,3,'COMMA')+' 원'}"></td>
+				</tr>
+			</table>
+		</form>
+	
+	
+	</div>
+</div>
+
+
+<!-- 탑버튼 자바스크립트 -->
+
+<script>
+	$(function () {
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 200) {
+				$('#toTop').fadeIn();
+				$('#toTop').css('left', $('#sidebar').offset());
+			} else {
+				$('#toTop').fadeOut();
+			}
+		});
+		$("#toTop").click(function () {
+			$('html, body').animate({
+				scrollTop: 0
+			}, 400);
+			return false;
+		});
+	});
+</script>
+
+<!-- footer -->
+
+</body>
+<div th:replace="/common/footer.html"></div>
+
+</html>

@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.matcat.order.dao.OrderMapper">
+
+    <!-- OrderDTO -->
+    <resultMap type="com.greedy.matcat.order.dto.OrderDTO" id="generalOrderResultMap">
+        <id property="ordCode" column="ORD_CODE"/>
+        <result property="ordDate" column="ORD_DATE"/>
+        <result property="ordPrice" column="ORD_PRICE"/>
+        <result property="deliveryPrice" column="DELIVERY_PRICE"/>
+        <result property="ordTotalCount" column="ORD_TOTAL_COUNT"/>
+        <result property="memberNo" column="ORD_MEMBER_NO"/>
+        <association property="member" resultMap="memberResultMap"/>
+        <association property="status" resultMap="orderStatusResultMap"/>
+        <association property="product" resultMap="ProductResultMap"/>
+        <association property="ordDetail" resultMap="orderDetailResultMap"/>
+        <association property="payment" resultMap="PaymentResultMap"/>
+        <collection property="ordDetails" resultMap="orderDetailResultMap"/>
+    </resultMap>
+    <!-- MemberDTO -->
+    <resultMap id="memberResultMap" type="com.greedy.matcat.member.dto.MemberDTO">
+        <id property="memberNo" column="MEMBER_NO"/>
+        <result property="memberId" column="MEMBER_ID"/>
+        <result property="memberPwd" column="MEMBER_PWD"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="memberEmail" column="MEMBER_EMAIL"/>
+        <result property="memberGender" column="MEMBER_GENDER"/>
+        <result property="memberPhone" column="MEMBER_PHONE"/>
+        <result property="memberAddress" column="MEMBER_ADDRESS"/>
+        <result property="memberLeaveYN" column="MEMBER_LEAVE_YN"/>
+        <result property="memberGrade" column="MEMBER_GRADE"/>
+        <result property="memberLeaveReason" column="MEMBER_LEAVE_REASON"/>
+        <collection property="memberRoleList" resultMap="authMemberResultMap"/>
+    </resultMap>
+    <!-- AuthMemberDTO -->
+    <resultMap id="authMemberResultMap" type="com.greedy.matcat.member.dto.AuthMemberDTO">
+        <id property="memberNo" column="REF_MEMBER_NO"/>
+        <id property="authorityCode" column="REF_AUTH_CODE"/>
+        <association property="authority" resultMap="authorityResultMap"/>
+    </resultMap>
+    <!-- AuthorityDTO -->
+    <resultMap id="authorityResultMap" type="com.greedy.matcat.member.dto.AuthorityDTO">
+        <id property="authCode" column="REF_AUTH_CODE2"/>
+        <result property="authName" column="AUTH_NAME"/>
+        <result property="authExplanation" column="AUTH_EXPLANATION"/>
+    </resultMap>
+    <!-- OrderStatusDTO -->
+    <resultMap id="orderStatusResultMap" type="com.greedy.matcat.order.dto.OrderStatusDTO">
+        <id property="statusCode" column="STATUS_CODE"/>
+        <result property="statusName" column="STATUS_NAME"/>
+    </resultMap>
+    <!-- OrderDetailDTO -->
+    <resultMap id="orderDetailResultMap" type="com.greedy.matcat.order.dto.OrderDetailDTO">
+        <id property="ordCode" column="REF_ORD_CODE"/>
+        <result property="ordCount" column="ORD_COUNT"/>
+        <association property="products" resultMap="ProductResultMap"/>
+    </resultMap>
+    <!-- ProductDTO -->
+    <resultMap id="ProductResultMap" type="com.greedy.matcat.main.dto.ProductDTO">
+        <id property="code" column="PRD_CODE"/>
+        <result property="name" column="PRD_NAME"/>
+        <result property="price" column="PRD_PRICE"/>
+        <result property="quan" column="PRD_QUAN"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="status" column="PRD_STATUS"/>
+        <result property="registDate" column="PRD_REGIST_DATE"/>
+        <result property="modiDate" column="PRD_MODI_DATE"/>
+        <association property="categoryCode" resultMap="categoryResultMap"/>
+        <collection property="filesList" resultMap="filesResultMap"/>
+    </resultMap>
+
+    <!-- 파일 테이블 resultMap -->
+    <resultMap id="filesResultMap" type="com.greedy.matcat.main.dto.FilesDTO">
+        <id property="fileCode" column="FILE_IMG_CODE"/>
+        <result property="filePath" column="FILE_PATH"/>
+        <result property="fileSize" column="FILE_SIZE"/>
+        <result property="uploadDate" column="FILE_UPLOAD_DATE"/>
+        <result property="originName" column="FILE_ORIGIN_NAME"/>
+        <result property="savedName" column="FILE_SAVED_NAME"/>
+        <result property="fileDiv" column="FILE_DIV"/>
+        <result property="inqCode" column="INQ_CODE"/>
+        <result property="postCode" column="POST_CODE"/>
+        <result property="revCode" column="REV_CODE"/>
+        <result property="prdCode" column="PRD_CODE"/>
+        <result property="thumbYN" column="THUMB_YN"/>
+        <result property="thumbPath" column="THUMB_PATH"/>
+    </resultMap>
+
+    <!-- PaymentDTO -->
+    <resultMap id="PaymentResultMap" type="com.greedy.matcat.order.dto.PaymentDTO">
+        <id property="payCode" column="PAY_CODE"/>
+        <result property="payDate" column="PAY_DATE"/>
+        <result property="payAmount" column="PAY_AMOUNT"/>
+        <result property="payStatus" column="PAY_STATUS"/>
+        <result property="ordCode" column="ORD_CODE"/>
+        <result property="payType" column="PAY_TYPE"/>
+        <result property="cardAccCode" column="CARD_ACC_CODE"/>
+    </resultMap>
+    <!-- CartDTO -->
+    <resultMap type="com.greedy.matcat.main.dto.CartDTO" id="cartResultMap">
+        <id property="cartNo" column="CART_NO"/>
+        <result property="quantity" column="QUANTITY"/>
+        <result property="cartPrice" column="CART_PRICE"/>
+        <association property="member" resultMap="memberResultMap"/>
+        <association property="products" resultMap="ProductResultMap"/>
+    </resultMap>
+    <resultMap id="categoryResultMap" type="com.greedy.matcat.main.dto.CategoryDTO">
+        <id property="code" column="CATEGORY_CODE"/>
+        <result property="name" column="CATEGORY_NAME"/>
+    </resultMap>
+    <resultMap id="totalDTO" type="com.greedy.matcat.admin.dto.TotalDTO">
+        <id property="count" column="count"/>
+        <result property="sum" column="sum"/>
+    </resultMap>
+
+    <!-- 테스트중 -->
+	<select id="adminOrdCustomerSelect" resultMap="generalOrderResultMap">
+		SELECT *
+		FROM TBL_ORDER A
+		JOIN TBL_MEMBER B ON ( A.MEMBER_NO = B.MEMBER_NO)
+	   WHERE A.ORD_CODE = #{ ordCode }
+	</select>
+
+	<select id="ordInfo" resultMap="ProductResultMap">
+  	SELECT  
+     		P.PRD_NAME REF_PRD_NAME,
+     		F.THUMB_PATH,
+            P.PRD_PRICE
+      FROM TBL_PRODUCT P
+INNER JOIN TBL_FILES F ON(P.PRD_CODE = F.PRD_CODE)
+       WHERE THUMB_YN = 'Y'
+       AND P.PRD_CODE = 3
+    </select>
+    
+	<select id="selectAdminOrderDetail" resultMap="generalOrderResultMap">
+		SELECT
+		         A.ORD_CODE
+			   , A.ORD_PRICE
+			   , A.ORD_TOTAL_COUNT
+			   , A.DELIVERY_PRICE
+			   , A.ORD_DATE
+			   , B.PRD_NAME
+		       , B.PRD_CODE
+		       , C.PRD_CODE REF_PRD_CODE		       
+		       , B.PRD_PRICE
+		       , C.ORD_COUNT 
+		  FROM TBL_ORDER A
+		  JOIN TBL_ORDER_DETAIL C ON( C.ORD_CODE = A.ORD_CODE )
+	INNER JOIN TBL_PRODUCT B ON( C.PRD_CODE = B.PRD_CODE )
+		  WHERE A.ORD_CODE = #{ ordCode }
+	</select>
+	
+    <select id="selectTotalCount" resultType="_int"
+            parameterType="hashmap">
+        SELECT
+        COUNT(*)
+        FROM TBL_ORDER A
+        <if test="searchCondition == 'memberName'">
+            JOIN TBL_MEMBER B ON(A.MEMBER_NO = B.MEMBER_NO)
+        </if>
+        <where>
+            <if test="searchCondition == 'memberName'">
+                B.MEMBER_NAME LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberNo'">
+                A.MEMBER_NO LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'ordCode'">
+                A.ORD_CODE LIKE '%' || #{ searchValue } || '%'
+            </if>
+        </where>
+    </select>
+
+    <select id="totalCountOrder" resultType="int">
+        SELECT
+               COUNT(*)
+          FROM TBL_ORDER
+         WHERE MEMBER_NO = #{here}
+    </select>
+
+    <select id="newOrder" resultMap="generalOrderResultMap">
+        SELECT
+        ORD_CODE,
+        ORD_DATE,
+        ORD_PRICE,
+        MEMBER_NO,
+        MEMBER_NAME,
+        ORD_TOTAL_COUNT,
+        STATUS_CODE,
+        STATUS_NAME
+        FROM (SELECT
+        ROWNUM RNUM,
+        A.ord_code,
+        A.ord_date,
+        A.ord_price,
+        A.member_no,
+        A.member_name,
+        a.ord_total_count,
+        a.status_code,
+        a.status_name
+        FROM (SELECT
+        B.ORD_CODE
+        , B.ORD_DATE
+        , B.ORD_PRICE
+        , C.MEMBER_NO MEMBER_NO
+        , C.MEMBER_NAME
+        , B.ORD_TOTAL_COUNT
+        , D.STATUS_CODE
+        , D.STATUS_NAME
+        FROM TBL_ORDER B
+        JOIN TBL_MEMBER C ON (B.MEMBER_NO = C.MEMBER_NO)
+        JOIN TBL_ORDER_STATUS D ON (B.STATUS_CODE = D.STATUS_CODE)
+        WHERE c.MEMBER_GRADE = 'USER'
+        ORDER BY b.ord_code DESC) A
+        where 3 >= ROWNUM
+        ) A
+        ORDER BY RNUM
+    </select>
+    <select id="total" resultMap="totalDTO">
+        select
+            count(*) count,
+            sum(ord_price) sum
+        from tbl_order
+    </select>
+    <select id="selectOrderList" resultMap="generalOrderResultMap">
+        SELECT
+        ORD_CODE,
+        ORD_DATE,
+        ORD_PRICE,
+        MEMBER_NO,
+        MEMBER_NAME,
+        ORD_TOTAL_COUNT,
+        STATUS_CODE,
+        STATUS_NAME
+        FROM (SELECT
+        ROWNUM RNUM,
+        A.ord_code,
+        A.ord_date,
+        A.ord_price,
+        A.member_no,
+        A.member_name,
+        a.ord_total_count,
+        a.status_code,
+        a.status_name
+        FROM (SELECT
+        B.ORD_CODE
+        , B.ORD_DATE
+        , B.ORD_PRICE
+        , C.MEMBER_NO MEMBER_NO
+        , C.MEMBER_NAME
+        , B.ORD_TOTAL_COUNT
+        , D.STATUS_CODE
+        , D.STATUS_NAME
+        FROM TBL_ORDER B
+        JOIN TBL_MEMBER C ON (B.MEMBER_NO = C.MEMBER_NO)
+        JOIN TBL_ORDER_STATUS D ON (B.STATUS_CODE = D.STATUS_CODE)
+        WHERE c.MEMBER_GRADE = 'USER'
+            <if test="searchCondition == 'memberName'">
+                AND c.MEMBER_NAME LIKE '%' || #{ searchValue } || '%'
+            </if>
+            <if test="searchCondition == 'memberNo'">
+                AND c.MEMBER_NO = #{ searchValue }
+            </if>
+            <if test="searchCondition == 'ordCode'">
+                AND b.ORD_CODE LIKE '%' || #{ searchValue } || '%'
+            </if>
+        ORDER BY b.ord_code DESC) A
+        where #{endRow} >= ROWNUM
+        ) A
+        where rnum >= #{startRow}
+        ORDER BY RNUM
+    </select>
+
+    <select id="memberOrderList" resultMap="generalOrderResultMap">
+        SELECT
+               ORD_CODE,
+               ORD_DATE,
+               ORD_PRICE,
+               ORD_TOTAL_COUNT,
+               MEMBER_NO,
+               MEMBER_NAME,
+               MEMBER_ID,
+               MEMBER_EMAIL,
+               MEMBER_PHONE,
+               PRD_NAME,
+               PAY_TYPE,
+               PAY_DATE,
+               STATUS_NAME,
+               STATUS_CODE
+          FROM (SELECT
+                       ROWNUM RNUM,
+                       A.ORD_CODE ORD_CODE,
+                       A.ORD_DATE,
+                       A.ORD_PRICE,
+                       A.ORD_TOTAL_COUNT,
+                       A.MEMBER_NO,
+                       A.MEMBER_NAME,
+                       A.MEMBER_ID,
+                       A.MEMBER_EMAIL,
+                       A.MEMBER_PHONE,
+                       A.PRD_NAME PRD_NAME,
+                       A.PAY_TYPE PAY_TYPE,
+                       A.PAY_DATE PAY_DATE,
+                       A.STATUS_NAME STATUS_NAME,
+                       A.STATUS_CODE STATUS_CODE
+                  FROM (SELECT
+                               A.MEMBER_NO,
+                               A.MEMBER_NAME,
+                               A.MEMBER_ID,
+                               A.MEMBER_EMAIL,
+                               A.MEMBER_PHONE,
+                               B.ORD_CODE,
+                               B.ORD_DATE,
+                               B.ORD_PRICE,
+                               B.ORD_TOTAL_COUNT,
+                               C.STATUS_NAME,
+                               C.STATUS_CODE,
+                               E.PRD_NAME,
+                               F.PAY_TYPE,
+                               F.PAY_DATE
+                          FROM TBL_MEMBER A
+                          LEFT JOIN TBL_ORDER B ON (A.MEMBER_NO = B.MEMBER_NO)
+                          LEFT JOIN TBL_ORDER_STATUS C ON (B.STATUS_CODE = C.STATUS_CODE)
+                          LEFT JOIN TBL_ORDER_DETAIL D ON (B.ORD_CODE = D.ORD_CODE)
+                          LEFT JOIN TBL_PRODUCT E ON (D.PRD_CODE = E.PRD_CODE)
+                          LEFT JOIN TBL_PAYMENT F ON (B.ORD_CODE = F.ORD_CODE)
+                         WHERE A.MEMBER_GRADE = 'USER'
+                           AND A.MEMBER_NO = #{ memberNo }
+                         ORDER BY B.ORD_CODE DESC) A
+                 WHERE #{ endRow } >= ROWNUM)
+         WHERE RNUM >= #{ startRow }
+    </select>
+    <!-- orderResultMap 쓰던 구문 -->
+    <select id="myOrderDetail" resultMap="generalOrderResultMap">
+        SELECT
+               A.ORD_CODE
+             , A.ORD_PRICE
+             , A.ORD_TOTAL_COUNT
+             , A.DELIVERY_PRICE
+             , A.ORD_DATE
+             , B.PRD_NAME
+             , B.PRD_CODE
+             , C.PRD_CODE REF_PRD_CODE
+             , B.PRD_PRICE
+             , C.ORD_COUNT
+             , d.thumb_path
+        FROM TBL_ORDER A
+        JOIN TBL_ORDER_DETAIL C ON( C.ORD_CODE = A.ORD_CODE )
+    	JOIN TBL_PRODUCT B ON( C.PRD_CODE = B.PRD_CODE )
+    left join tbl_files d on (c.prd_code = d.prd_code)
+        WHERE A.ORD_CODE = #{here}
+    </select>
+
+    <select id="getMyCart" resultMap="cartResultMap">
+        select b.*,
+               a.*
+        from tbl_cart b
+        join tbl_product a on (a.prd_code = b.prd_code)
+        where b.member_no = #{asdf}
+    </select>
+
+    <insert id="insertPay">
+        insert into tbl_payment
+        (
+        pay_code,
+        pay_date,
+        pay_amount,
+        pay_status,
+        ord_code,
+        pay_type,
+        card_acc_code
+        )
+        values
+        (
+        seq_pay_code.nextval,
+        sysdate,
+        #{payAmount},
+        'Y',
+        seq_ord.currval,
+        #{payType},
+        #{cardAccCode}
+        )
+    </insert>
+    
+    <select id="ordComplete" resultMap="generalOrderResultMap">
+<!--        SELECT  A.ORD_CODE
+             , A.ORD_PRICE
+             , A.ORD_TOTAL_COUNT
+             , A.DELIVERY_PRICE
+             , A.ORD_DATE
+             , B.PRD_NAME
+             , B.PRD_CODE
+             , C.PRD_CODE REF_PRD_CODE
+             , B.PRD_PRICE
+             , C.ORD_COUNT
+        FROM TBL_ORDER A
+        JOIN TBL_ORDER_DETAIL C ON( C.ORD_CODE = A.ORD_CODE )
+        JOIN TBL_PRODUCT B ON( C.PRD_CODE = B.PRD_CODE )
+        WHERE A.MEMBER_NO = #{memNo}
+		ORDER BY A.ORD_CODE DESC
+		FETCH FIRST 1 ROW ONLY -->
+		select 
+				ord_code, 
+				ord_price, 
+				delivery_price, 
+				member_no ORD_MEMBER_NO, 
+				ord_total_count
+		from tbl_order
+		where member_no = 2
+		order by ord_code desc
+		FETCH FIRST 1 ROW ONLY 
+    </select>
+    
+    <insert id="insertOrder">
+    	INSERT INTO TBL_ORDER
+		( ORD_CODE
+		, ORD_DATE
+		, ORD_PRICE
+		, DELIVERY_PRICE
+		, MEMBER_NO
+		, ORD_TOTAL_COUNT
+		, STATUS_CODE 
+		)VALUES (
+		    SEQ_ORD.NEXTVAL,
+		    SYSDATE,
+		    #{price},
+		    0,
+		    #{memberNo},
+		    1,
+		    3
+		)
+    </insert>
+    <insert id="insertOrderDetail">
+        insert into tbl_order_detail
+        (
+            prd_code,
+            ord_code,
+            ord_count
+        )
+        values
+        (
+            #{here},
+            seq_ord.currval,
+            1
+        )
+    </insert>
+</mapper>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	 <script type="text/javascript" src="/js/findPWD.js"></script>
+	<link rel="stylesheet" href="/css/findPWD.css">
+	<title>findPWD</title>
+</head>
+<body class="container">
+	<div th:replace="/member/header.html"></div>
+	<div class="login-container">
+	
+			<h1 id=pwdname align="center">비밀번호 찾기</h1>
+	
+		<form id="findPWD" action="/member/send" method="post">
+			<table id="text-box">
+				<tr class="id">
+					<th>
+						<label class="text">아이디</label>
+					</th>
+					<td>
+						<input type="text" name="memberId" class="idInsert" id="memberId" required>
+					</td>
+				</tr>
+				<tr class="name">
+					<th class="insertid">
+						<label class="text">이름</label>
+					</th>
+					<td>
+						<input type="text" name="memberName" class="nameInsert" id="memberName" required>
+					</td>
+				</tr>
+				<tr class="phone">
+					<th>
+						<label class="text">전화번호</label>
+					</th>
+					<td>
+						<input type="text" name="memberPhone" class="phoneInsert" id="memberPhone" required>
+					</td>
+				</tr>
+				<tr class="email">
+					<th>
+						<label class="text">이메일</label>
+					</th>
+					<td><input type="email" name="memberEmail" class="emailInsert" id="memberEmail" required></td>
+				</tr>
+				<div id="centerplz">
+					<input type="button" value="비밀번호 찾기" id="doubleCheck">
+				</div>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

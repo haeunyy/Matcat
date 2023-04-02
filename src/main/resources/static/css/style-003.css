@@ -1,0 +1,76 @@
+@charset "UTF-8";
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* MATCAT 기본 배경 색*/
+html {
+    background-color: #FBF9F1;
+}
+
+/* 사이드 바 스타일 */
+#sidebar {
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #FBF9F1;
+}
+
+#sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar li {
+    padding: 10px;
+    list-style-type: none;
+
+    border-bottom: 1px solid #ddd;
+}
+
+#sidebar-title {
+    font-size: large;
+    font-weight: 900;
+}
+
+
+#sidebar li a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#sidebar li a:hover {
+    background-color: #ddd;
+}
+
+/* 페이지 내용 스타일 */
+#content {
+    margin-left: 200px; /* 사이드 바 너비만큼 왼쪽 마진 추가 */
+    padding: 20px;
+}
+
+
+/* 테이블 */
+#listArea {
+    text-align: center;
+}
+
+#listArea :first-child{
+    font-weight: 800;
+}
+
+#listArea td:first-child{
+    width: 10px !important;
+}
+#listArea td{
+    width: 100px;
+    padding: 5px;
+}
+
+#listArea-width{
+    width: 200px !important;
+}

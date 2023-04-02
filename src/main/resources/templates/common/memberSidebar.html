@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+		#HelpNav{
+			width: 220px;
+			height: 50px;
+			margin: auto;
+		}
+		
+		#helpDesk{
+			background-color: #2B7C1E;
+			width: 200px;
+			height: 70px;
+			text-align: center;
+			margin-top: 150px;
+		}
+	</style>
+</head>
+<body>
+<div id="helpDesk" class="row rounded">
+	<h2 class="text-light mt-3">고객센터</h2>
+	
+	<br><br><br><br>
+	
+	<button id="HelpNav" class="btn btn-light" style="margin-top: 5%;"
+	        onclick="location.href='../user/userHelp001'">1:1 문의 접수</button>
+	<br>
+	<button id="HelpNav" class="btn btn-light " style="margin-top: 5%;"
+	        onclick="location.href='../board/boardList'">1:1 문의
+		내역</button>
+	<br>
+	<button id="HelpNav" class="btn btn-light" style="margin-top: 5%;"
+	        onclick="location.href='../board/boardList'">공지사항</button>
+	<br>
+	<button id="HelpNav" class="btn btn-light" style="margin-top: 5%;"
+	        onclick="location.href='../admin/adminHelp002'">자주 묻는
+		질문</button>
+	<br>
+</div>
+
+</body>
+</html>

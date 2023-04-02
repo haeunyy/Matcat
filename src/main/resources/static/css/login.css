@@ -1,0 +1,160 @@
+
+
+html {
+    background-color: #FBF9F1;
+}
+
+body {
+	margin:auto;
+    width: 1440px;
+    height: 1024px;
+    background: #FBF9F1;
+}
+
+#loginname {
+	padding:8% 0% 0% 0%;
+	font-size:3rem;
+	opacity: 40%;
+}
+/* 로그인 전체 div */
+.login-container {
+    width:63%;
+    height: 57%;
+    margin:auto;
+    margin-top: 2%;
+    background-color: #f3f0f0;
+    box-shadow: 6px 10px 4px 0 rgba(0,0,0,0.25);
+    
+}
+
+/* 아이디 비밂번호 라벨 */ 
+.text {
+    font-size: 1.75rem;
+    padding-right: 50px;
+}
+/* 로그인 폼 (테이블)*/
+#loginForm {
+     display: flex;
+     align-items: center;
+     padding: 5% 10% 1% 10%;
+     flex-direction: column-reverse;
+ }
+
+
+/* 아이디 비번 입력 */
+.IDinsert {
+    width: 98%;
+    height: 15%;
+     margin-bottom: 3%;
+   
+}
+.PWDinsert {
+    width: 98%;
+    height: 15%;
+}
+
+
+.btns button{
+    width: 118px;
+    height: 30px;
+    color: #000000;
+    background-color: #72c565;
+    cursor: pointer;
+    margin-left: 27px;
+    margin-top: 12%;
+    border: solid 0px;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-shadow: 3px 3px 1px 0 rgba(0,0,0,0.25);
+}
+
+#social img{
+    width: auto;
+    height: 50px;
+}
+
+#social:hover {
+    cursor: pointer;
+}
+
+#social a:first-child{
+    padding-right: 30px;
+}
+
+#social a:nth-child(2) {
+    margin-right: 27px;
+}
+
+.btns button:hover {
+	background-color: #5aa94e;
+}
+
+.btns button:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+
+
+/*회원가*/
+#regist{
+   margin:auto;
+}
+
+
+/* 로그인 버튼 */
+
+#loginSubmit {
+    margin-top:3%;
+    background-color: #72c565;
+	border: solid 0px;
+	border-radius: 5px;
+	padding:1% 24.5% 1% 24.5%;
+	font-size:1.5rem;
+	box-shadow: 3px 3px 1px 0 rgba(0,0,0,0.25);
+}
+#loginSubmit:hover {
+	background-color: #5aa94e;
+    cursor: pointer;
+}
+#loginSubmit:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+#yourId{
+    font-size: 30px;
+    
+}
+
+#yourId2{
+	padding-top: 20%;
+    font-size: 30px;
+    text-align: center;
+}
+
+#loginSubmit_2 {
+    width: 230px;
+    height: 40px;
+    color: #000000;
+    background-color: #72c565;
+    cursor: pointer;
+    margin-top: 60%;
+    border: 0px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
+}
+#loginSubmit_2:hover {
+	background-color: #5aa94e;
+}
+#loginSubmit_2:active {
+    color: black;
+    background-color: rgb(202, 202, 202);
+}
+
+
+
+input {
+    font-size: 200%;
+}

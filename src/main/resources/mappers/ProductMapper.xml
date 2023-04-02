@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.matcat.main.dao.ProductMapper">
+
+	<resultMap id="ProductResultMap" type="com.greedy.matcat.main.dto.ProductDTO">
+		<id property="code" column="PRD_CODE"/>
+		<result property="name" column="PRD_NAME"/>
+		<result property="price" column="PRD_PRICE"/>
+		<result property="quan" column="PRD_QUAN"/>
+		<result property="categoryCode" column="CATEGORY_CODE"/>
+		<result property="status" column="PRD_STATUS"/>
+		<result property="registDate" column="PRD_REGIST_DATE"/>
+		<result property="modiDate" column="PRD_MODI_DATE"/>
+		<association property="categoryCode" resultMap="categoryResultMap"/>
+		<collection property="filesList" resultMap="filesResultMap"/>
+	</resultMap>
+	
+	<resultMap id="categoryResultMap" type="com.greedy.matcat.main.dto.CategoryDTO">
+		<id property="code" column="CATEGORY_CODE"/>
+		<result property="name" column="CATEGORY_NAME"/>
+	</resultMap>
+	
+	<!-- 파일 테이블 resultMap -->
+	<resultMap id="filesResultMap" type="com.greedy.matcat.main.dto.FilesDTO">
+		<id property="fileCode" column="FILE_IMG_CODE"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileSize" column="FILE_SIZE"/>
+		<result property="uploadDate" column="FILE_UPLOAD_DATE"/>
+		<result property="originName" column="FILE_ORIGIN_NAME"/>
+		<result property="savedName" column="FILE_SAVED_NAME"/>
+		<result property="fileDiv" column="FILE_DIV"/>
+		<result property="inqCode" column="INQ_CODE"/>
+		<result property="postCode" column="POST_CODE"/>
+		<result property="revCode" column="REV_CODE"/>
+		<result property="prdCode" column="PRD_CODE"/>
+		<result property="thumbYN" column="THUMB_YN"/>
+		<result property="thumbPath" column="THUMB_PATH"/>
+	</resultMap>
+	<!-- 메인페이지 신메뉴 조회하기  -->
+	<select id="findMainNewProduct" resultMap="ProductResultMap">
+		select
+			prd_code,
+			prd_name,
+			prd_price,
+			thumb_path
+		from (select
+				  rownum rnum,
+				  a.prd_code,
+				  a.prd_name,
+				  a.prd_price,
+				  a.thumb_path
+			  from (select
+						a.prd_code,
+						a.prd_name,
+						a.prd_price,
+						b.thumb_path
+					from tbl_product a
+							 join tbl_files b on (a.prd_code = b.prd_code)
+					where b.thumb_yn = 'Y'
+					order by b.file_upload_date desc) a
+			  where 4 >= rownum)
+	</select>
+	<!-- 메인페이지 많이 팔린 상품 조회 -->
+	<select id="findGoodProduct" resultMap="ProductResultMap">
+		select
+			A.prd_code,
+			A.prd_name,
+			A.prd_price,
+			B.thumb_path
+		from(select
+				 rownum rnum,
+				 a.prd_code,
+				 a.prd_name,
+				 a.prd_price
+			 from (select
+					   a.prd_code,
+					   a.prd_name,
+					   a.prd_price,
+					   count(c.prd_code) AS COUNT
+				   from tbl_product a
+					   join tbl_files b on (a.prd_code = b.prd_code)
+					   join tbl_order_detail c on (b.prd_code = c.prd_code)
+				   where b.thumb_yn = 'Y'
+				   group by a.prd_code, a.prd_name, a.prd_price
+				   order by COUNT desc) a
+			 where 4 >= rownum) A
+				join tbl_files B on (A.prd_code = B.prd_code)
+		where B.thumb_yn = 'Y'
+		order by rnum
+	</select>
+
+	<!-- search 페이지 조회 -->
+	<select id="mainProduct" resultMap="ProductResultMap">
+		select
+			prd_code,
+			prd_name,
+			prd_price,
+			thumb_path
+		from (select
+				  rownum rnum,
+				  a.prd_code,
+				  a.prd_name,
+				  a.prd_price,
+				  a.thumb_path
+			  from (
+					<if test="arrayCode == 1">
+						select
+						a.prd_code,
+						a.prd_name,
+						a.prd_price,
+						b.thumb_path
+						from tbl_product a
+						join tbl_files b on (a.prd_code = b.prd_code)
+						where b.thumb_yn = 'Y'
+						and a.prd_status = '판매중'
+						<if test="criteria.searchValue != null">
+							and a.prd_name LIKE '%' || #{ criteria.searchValue } || '%'
+						</if>
+						<if test="categoryCode >= 10">
+							and a.category_code = #{categoryCode}
+						</if>
+						order by b.file_upload_date desc
+					</if>
+					<if test="arrayCode == 2">
+						select
+						a.prd_code,
+						a.prd_name,
+						a.prd_price,
+						b.thumb_path,
+						count(c.prd_code) AS COUNT
+						from tbl_product a
+						join tbl_files b on (a.prd_code = b.prd_code and b.thumb_yn = 'Y')
+						left join tbl_order_detail c on (a.prd_code = c.prd_code)
+						where a.prd_status = '판매중'
+						<if test="criteria.searchValue != null">
+								and a.prd_name = LIKE '%' || #{ criteria.searchValue } || '%'
+							</if>
+							<if test="categoryCode >= 10">
+								and a.category_code = #{categoryCode}
+							</if>
+						group by a.prd_code, a.prd_name, a.prd_price , b.thumb_path
+						order by COUNT desc
+					</if>
+					<if test="arrayCode == 3">
+						select
+						a.prd_code,
+						a.prd_name,
+						a.prd_price,
+						b.thumb_path
+						from tbl_product a
+						join tbl_files b on (a.prd_code = b.prd_code)
+						where b.thumb_yn = 'Y'
+						  and a.prd_status = '판매중'
+						<if test="criteria.searchValue != null">
+							and a.prd_name = LIKE '%' || #{ criteria.searchValue } || '%'
+						</if>
+						<if test="categoryCode >= 10">
+							and a.category_code = #{categoryCode}
+						</if>
+						order by a.prd_price desc
+					</if>
+					<if test="arrayCode == 4">
+						select
+						a.prd_code,
+						a.prd_name,
+						a.prd_price,
+						b.thumb_path
+						from tbl_product a
+						join tbl_files b on (a.prd_code = b.prd_code)
+						where b.thumb_yn = 'Y'
+						  and a.prd_status = '판매중'
+						<if test="criteria.searchValue != null">
+							and a.prd_name = LIKE '%' || #{ criteria.searchValue } || '%'
+						</if>
+						<if test="categoryCode >= 10">
+							and a.category_code = #{categoryCode}
+						</if>
+						order by a.prd_price
+					</if>
+					) a
+			  WHERE #{ criteria.endRow } >= ROWNUM
+			 )
+		WHERE RNUM >= #{ criteria.startRow }
+		ORDER BY RNUM
+	</select>
+
+	<select id="newProduct" resultMap="ProductResultMap">
+		select
+			prd_code,
+			prd_name,
+			prd_price,
+			prd_quan,
+			prd_status
+		from (select
+				  rownum rnum,
+				  prd_code,
+				  prd_name,
+				  prd_price,
+				  prd_quan,
+				  prd_status
+			  from (select
+						prd_code,
+						prd_name,
+						prd_price,
+						prd_quan,
+						prd_status
+					from tbl_product
+					order by prd_quan) a
+			  where 3 >= rownum)
+	</select>
+	<!--  상세페이지 상품 조회 -->
+ 	<select id="semiProduct" resultMap="ProductResultMap">
+ 		SELECT
+ 			   A.PRD_CODE
+ 			 , A.PRD_NAME
+ 			 , A.PRD_PRICE
+ 			 , A.PRD_STATUS
+ 			 , B.FILE_IMG_CODE
+ 			 , B.THUMB_PATH
+ 		  FROM TBL_PRODUCT A
+ 		  LEFT JOIN TBL_FILES B ON (A.PRD_CODE = B.PRD_CODE)
+ 		 where B.THUMB_YN = 'Y'
+		 AND  A.PRD_CODE = #{ no }
+ 		 ORDER BY PRD_CODE
+ 	</select>
+
+<!-- 관리 -->
+	<!-- 관리자 >> /product/list페이지에서 등록된 상품 리스트 확인하기 -->
+	<select id="productList" resultMap="ProductResultMap">
+		SELECT
+			   PRD_CODE
+			 , PRD_NAME
+			 , PRD_PRICE
+			 , PRD_QUAN
+			 , CATEGORY_CODE
+			 , PRD_STATUS
+			 , PRD_REGIST_DATE
+			 , PRD_MODI_DATE
+		  FROM TBL_PRODUCT
+    </select>
+	
+	<!-- 상품등록 -->
+	<insert id="insertProduct">
+		INSERT 
+		INTO TBL_PRODUCT P
+		(
+			P.PRD_CODE
+		  , P.PRD_NAME
+		  , P.PRD_PRICE
+		  , P.PRD_QUAN
+		  , P.CATEGORY_CODE
+		  , P.PRD_STATUS
+		) 
+		VALUES
+		(
+		 SEQ_PRD_CODE.NEXTVAL,
+		 #{name},
+		 #{price},
+		 #{quan},
+		 #{categoryCode},
+		 #{status}
+		)
+	</insert>
+	
+	<insert id="insertPrdImgs">
+		INSERT
+		INTO TBL_FILES F
+			(
+			    F.FILE_IMG_CODE
+			  , F.FILE_PATH
+			  , F.FILE_SIZE
+			  , F.FILE_ORIGIN_NAME
+			  , F.FILE_SAVED_NAME
+			  , F.FILE_DIV
+			  , F.PRD_CODE
+			  , F.THUMB_YN
+			  , F.THUMB_PATH
+			)
+			VALUES
+			(
+			    SEQ_FILE_CODE.NEXTVAL
+			  , #{filePath}
+			  , #{fileSize}
+			  , #{originName}
+			  , #{savedName}
+			  , #{fileDiv}
+			  , SEQ_PRD_CODE.CURRVAL
+			  , #{thumbYN}
+			  , #{thumbPath, jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<!-- 관리자 >> /product/list페이지에서 등록된 상품 리스트 확인하기 -->
+	<!-- selectProductTotalCount -->
+	<select id="selectProductTotalCount" resultType="_int">
+        SELECT
+        	   COUNT(*)
+          FROM TBL_PRODUCT
+    </select>
+
+	<select id="selectProductTotalCount2" resultType="_int" parameterType="hashmap">
+        SELECT
+        COUNT(*)
+        FROM TBL_PRODUCT
+        <where>
+            <if test="searchValue != null">
+                and prd_name LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="categoryCode != 1">
+                and category_code = #{categoryCode}
+            </if>
+        </where>
+    </select>
+
+	<!-- productManageList -->
+	<select id="productManageList" resultMap="ProductResultMap">
+        SELECT
+	           A.PRD_CODE
+	         , D.THUMB_YN
+	         , D.THUMB_PATH
+	         , A.PRD_NAME
+	         , A.PRD_PRICE
+	         , A.PRD_QUAN
+	         , A.PRD_STATUS
+          FROM (SELECT
+                       ROWNUM RNUM
+                     , B.PRD_CODE
+			         , B.PRD_NAME
+			         , B.PRD_PRICE
+			         , B.PRD_QUAN
+			         , B.PRD_STATUS
+                  FROM (SELECT
+                               C.PRD_CODE
+					         , C.PRD_NAME
+					         , C.PRD_PRICE
+					         , C.PRD_QUAN
+					         , C.PRD_STATUS
+                          FROM TBL_PRODUCT C
+        				 ORDER BY C.PRD_CODE DESC
+        				) B
+        <![CDATA[
+                  WHERE ROWNUM <= #{ endRow }
+                  ]]>
+        ) A
+        JOIN TBL_FILES D ON (A.PRD_CODE = D.PRD_CODE)
+        WHERE A.RNUM >= #{ startRow }
+        ORDER BY 1 DESC
+    </select>
+
+
+</mapper>

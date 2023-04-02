@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<title>header</title>
+	<style>
+		* {
+			font-family: 'Noto Sans KR', sans-serif;
+			margin:0;
+		}
+		
+		/* -----------------------------헤더-----------------------------*/
+		/* 맨위에 헤더  */
+		#matcat-header {
+			margin-left: 5%;
+			margin-right: 2%;
+			display: flex;
+			justify-content: space-between;
+		}
+		
+		/* 헤더 flex와 정렬 및 등등*/
+		#header-nav {
+			display: flex;
+			list-style-type: none;
+			font-size: 1.1rem;
+			margin-top: 4.5%;
+		}
+		
+		/* 헤더 안에 li설정 ex.홈 상품목록 마이페이지 등등*/
+		#header-nav li {
+			margin-right: 89px;
+			margin-top: 10px;
+		}
+		
+		/* 마우스오버시 색상 변경*/
+		#header-nav a:hover {
+			color: darkgrey;
+		}
+		
+		/* <a> 밑에 있는 링크 밑줄 제거 */
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		
+		/* 검색창 길이 */
+		#searchValue {
+			width:70%;
+			border-radius: 5px;
+			border-color: lightgray;
+		}
+		
+		#searchO{
+			border-radius: 5px;
+			border-color: lightgray;
+		}
+		
+		/* 장바구니 로그인옆에 붙임*/
+		#jangi {
+			margin-left: -80px;
+		}
+		
+		#search-box {
+			display: flex;
+		}
+	
+		#matcat-logoname { 
+    width: 80%; 
+}
+	</style>
+	
+	<!--  구글 웹 폰트 -->
+	<link href="https://fonts.googleapis.com" rel="preconnect">
+	<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+	
+	<!-- 검색 돋보기 아이콘 -->
+	<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	      referrerpolicy="no-referrer" rel="stylesheet"/>
+	      
+</head>
+<body>
+
+	<header id="matcat-header">
+		<h1><a href="/main" id="matcat-logoname"><img src="/image/matcatlogo.png"></a></h1>
+		<nav>
+			<ul id="header-nav">
+				<li><a href="/main">홈</a></li>
+
+				<li><a href="/productList?arrayCode=1&categoryCode=1">상품목록</a></li>
+				<li><a href="/board/boardList">고객센터</a></li>
+
+				<li><a href="/member/mypage">마이페이지</a></li>
+				<li id="search-box">
+					<form id="searchname" action="/productList" method="get">
+						<input type="search" id=searchValue name="searchValue" placeholder="검색...">
+						<button id="searchO" class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+					</form>
+					<script>
+  							  $(".search-btn").click(function(){
+   							   if($.trim($("#searchValue").val())==''){
+      						 	alert("검색어를 입력해주세요.");
+      							 return false;
+   							   }
+    							 $("#searchname").submit();
+ 							   });
+</script>
+				</li>
+				<th:block sec:authorize="isAuthenticated()">
+					<li><a href="/member/logout">로그아웃</a></li>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<li><a href="/member/login">로그인</a></li>
+				</th:block>
+				<a href="/main/cart/list" id="jangi"><img src="/image/장바구니아이콘.png" value="1"></a>
+			</ul>
+		</nav>
+	</header>
+
+
+</body>
+</html>

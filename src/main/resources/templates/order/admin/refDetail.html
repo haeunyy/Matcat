@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/order.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style-002.css">
+    <!-- <script>
+        const message = '[[${message}]]';
+	    message && alert(message);
+    </script> -->
+</head>
+
+<body>
+    <div th:replace="common/AdminHeader.html"></div>
+    <div th:replace="common/AdminLeftSidebar.html"></div>
+    <div>
+        <p class="tableheader">주문 완료<hr></p>
+        <table id="order-list">
+            <tbody>
+                <tr th:each="order: ${order}">
+                    <td><img src="/images/product/001.png" alt="상품1"></td>
+                    <td>[엄마손] 떡튀순 세트</td>
+                    <td>2개</td>
+                    <td>10,000원</td>
+                    <td>20,000원</td>      
+                </tr>
+                <tr>
+                    <td><img src="/images/product/002.png" alt="상품2"></td>
+                    <td>멍게비빔밥</td>
+                    <td>1개</td>
+                    <td>15,000원</td>
+                    <td>15,000원</td>
+                </tr>
+                <tr>
+                    <td><img src="/images/product/003.png" alt="상품3"></td>
+                    <td>장어덮밥과 군만두</td>
+                    <td>3개</td>
+                    <td>20,000원</td>
+                    <td>60,000원</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="infomation-form-inline">
+        <table id="table-left-inline">
+            <tr class="table-borderLine">
+                <td><b>&nbsp;환불 정보</b></td>
+            </tr>
+            <tr>
+                <td>결제 금액</td>
+                <td class="table-rightSort">62,000원</td>
+            </tr>
+            <tr>
+                <td>할인 금액</td>
+                <td class="table-rightSort">0원</td>
+            </tr>
+            <tr>
+                <td>배송비</td>
+                <td class="table-rightSort">-6,000원</td>
+            </tr>
+            <tr class="refPrice-font-imp">
+                <td>환불 금액</td>
+                <td class="table-rightSort">56,000원</td>
+            </tr>
+            <tr class="">
+                <td>&nbsp;</td>
+            </tr>
+            <tr class="table-borderLine">
+                <td><b>&nbsp;회원 정보</b></td>
+            </tr>
+            <tr>
+                <td>주문자 아이디</td>
+                <td class="table-rightSort">hongildong</td>
+            </tr>
+            <tr>
+                <td>회원명</td>
+                <td class="table-rightSort">홍길동</td>
+            </tr>
+            <tr>
+                <td>핸드폰</td>
+                <td class="table-rightSort">010-0000-0000</td>
+            </tr>
+            <tr>
+                <td>배송지 주소</td>
+                <td class="table-rightSort">서울특별시 종로구 대일빌딩 하이미디어학원 </td>
+            </tr>
+            <tr>
+                <td>결제수단</td>
+                <td class="table-rightSort">카카오페이</td>
+            </tr>
+        </table>
+        <table id="table-right">
+            <tr>
+                <td>반품사유 항목 : &nbsp;</td>
+                <td class="table-rightSort">반품사유</td>
+            </tr>
+        </table>
+        <div id="refReason-text">
+            margin: 3px ;
+    border-collapse: collapse;
+    font-size: 0.7em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+        </div>
+        <div class="btn-flex">
+            <form action="/order" method="get">
+                <button><img src="/image/btn-order-search.png" alt="주문조회"></button>
+                <button><img src="/image/이전으로.png" alt="이전으로"></button>
+            </form>
+        </div>
+    </div>
+    <div th:replace="common/footer.html"></div>
+</body>
