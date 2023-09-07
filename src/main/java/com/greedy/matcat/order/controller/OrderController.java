@@ -46,13 +46,10 @@ public class OrderController {
     /* 메인에서 결제 이동시 주문 정보 생성 */
     @ResponseBody
     @PostMapping("/insert")
-    public ResponseEntity<String> orderInsert(@AuthenticationPrincipal MemberDTO member,//member 필요없나
-    											@RequestBody CartDTO ct) {
+    public ResponseEntity<String> orderInsert(@AuthenticationPrincipal MemberDTO member,@RequestBody CartDTO ct) {
+	    
     	log.info("[OrderController] member : {}",member);
         log.info("[OrderController] cart : {} ", ct);
-//        int memNo = member.getMemberNo();
-//        Map<String,Object> map = orderService.insertOrder(totalPrice,memNo);
-//        log.info("[OrderService] map :{}",map);
         
         // cartcode 들로 
         CartDTO cart = new CartDTO();
@@ -110,14 +107,7 @@ public class OrderController {
         return "order/orderCompletion";
     }
     
-//    @PostMapping("/form")
-//    public String formProduct(Model model, Locale locale, HttpSession session
-//            	, @RequestBody OrderDetailDTO order) {
-//    	log.info("[OrderController] order : {}", order);
-//    	
-//    	
-//    	return "";
-//    }
+
     
     
     /* 회원 마이페이지 주문 조회리스트 */
